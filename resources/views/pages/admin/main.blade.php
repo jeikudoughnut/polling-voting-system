@@ -8,24 +8,24 @@
 
 <div class="flex min-h-screen border border-gray-300">
     <!-- Sidebar -->
-    <aside class="bg-white w-80 p-8 h-screen shadow-lg border-r border-gray-50">
-        <ul>
-            <li class="mb-6">
-                <a class="flex items-center text-gray-700 text-xl hover:text-blue-600" href="?page=dashboard">
-                    <i class="fas fa-tachometer-alt mr-4"></i>
-                    Dashboard
+    <aside class="bg-white w-64 p-6 h-screen shadow-lg border-r border-gray-50 rounded-lg">
+        <ul class="space-y-2">
+            <li>
+                <a class="flex items-center p-3 text-gray-700 text-xl hover:bg-gray-200 rounded-lg" href="?page=dashboard">
+                    <i class="fas fa-chart-pie mr-3"></i>
+                    <span class="whitespace-nowrap">Dashboard</span>
                 </a>
             </li>
-            <li class="mb-6">
-                <a class="flex items-center text-gray-700 text-xl hover:text-blue-600" href="?page=create-poll">
-                    <i class="fas fa-check-circle mr-4"></i>
-                    Poll Approval
+            <li>
+                <a class="flex items-center p-3 text-gray-700 text-xl hover:bg-gray-200 rounded-lg" href="?page=create-poll">
+                    <i class="fas fa-poll mr-3"></i>
+                    <span class="whitespace-nowrap">Poll Approval</span>
                 </a>
             </li>
-            <li class="mb-6">
-                <a class="flex items-center text-gray-700 text-xl hover:text-blue-600" href="?page=manage-user">
-                    <i class="fas fa-users mr-4"></i>
-                    User Management
+            <li>
+                <a class="flex items-center p-3 text-gray-700 text-xl hover:bg-gray-200 rounded-lg" href="?page=manage-user">
+                    <i class="fas fa-users-cog mr-3"></i>
+                    <span class="whitespace-nowrap">User Management</span>
                 </a>
             </li>
         </ul>
