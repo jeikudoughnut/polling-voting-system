@@ -13,8 +13,11 @@
             <span class="text-xl font-bold">Online Polling and Voting System</span>
         </div>
         <div class="flex items-center">
-            <input class="border border-gray-300 rounded-lg p-2 mr-4 w-64" placeholder="Search" type="text"/>
-            <img alt="User profile picture" class="rounded-full border border-gray-300" height="40" src="https://storage.googleapis.com/a1aa/image/OUtcNaFIYvvA83Pfx7zKJTkmB6V7otgm6ENk7-9B_EE.jpg" width="40"/>
+            <div class="relative w-80">
+                <input class="border border-gray-300 rounded-lg pl-10 pr-4 py-2 w-full" placeholder="Search" type="text"/>
+                <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+            </div>
+            <img alt="User profile picture" class="rounded-full border border-gray-300 ml-4" height="40" src="https://storage.googleapis.com/a1aa/image/OUtcNaFIYvvA83Pfx7zKJTkmB6V7otgm6ENk7-9B_EE.jpg" width="40"/>
         </div>
     </div>
 </body>
