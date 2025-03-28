@@ -19,12 +19,12 @@
                 </li>
                 <li>
                     <a href="?page=create-poll" class="block px-4 py-2 bg-gray-700 rounded hover:bg-gray-600 transition">
-                        Create Poll
+                        Poll Approval
                     </a>
                 </li>
                 <li>
                     <a href="?page=manage-user" class="block px-4 py-2 bg-gray-700 rounded hover:bg-gray-600 transition">
-                        Manage Users
+                        User Management
                     </a>
                 </li>
             </ul>
