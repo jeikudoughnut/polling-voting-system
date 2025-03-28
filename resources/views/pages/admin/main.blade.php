@@ -6,33 +6,33 @@
 
 @include('global.topbar')
 
-<div class="flex min-h-screen">
+<div class="flex min-h-screen border border-gray-300">
     <!-- Sidebar -->
-    <aside class="w-64 bg-gray-800 text-white p-5">
-        <h2 class="text-lg font-semibold mb-4">Admin Panel</h2>
-        <nav>
-            <ul class="space-y-2">
-                <li>
-                    <a href="?page=dashboard" class="block px-4 py-2 bg-gray-700 rounded hover:bg-gray-600 transition">
-                        Dashboard
-                    </a>
-                </li>
-                <li>
-                    <a href="?page=create-poll" class="block px-4 py-2 bg-gray-700 rounded hover:bg-gray-600 transition">
-                        Poll Approval
-                    </a>
-                </li>
-                <li>
-                    <a href="?page=manage-user" class="block px-4 py-2 bg-gray-700 rounded hover:bg-gray-600 transition">
-                        User Management
-                    </a>
-                </li>
-            </ul>
-        </nav>
+    <aside class="bg-white w-80 p-8 h-screen shadow-lg border-r border-gray-50">
+        <ul>
+            <li class="mb-6">
+                <a class="flex items-center text-gray-700 text-xl hover:text-blue-600" href="?page=dashboard">
+                    <i class="fas fa-tachometer-alt mr-4"></i>
+                    Dashboard
+                </a>
+            </li>
+            <li class="mb-6">
+                <a class="flex items-center text-gray-700 text-xl hover:text-blue-600" href="?page=create-poll">
+                    <i class="fas fa-check-circle mr-4"></i>
+                    Poll Approval
+                </a>
+            </li>
+            <li class="mb-6">
+                <a class="flex items-center text-gray-700 text-xl hover:text-blue-600" href="?page=manage-user">
+                    <i class="fas fa-users mr-4"></i>
+                    User Management
+                </a>
+            </li>
+        </ul>
     </aside>
 
     <!-- Main Content -->
-    <main class="flex-1 p-6 bg-gray-100">
+    <main class="flex-1 p-10 bg-gray-100 border-l border-gray-300">
         @php
             $page = request()->get('page', 'dashboard');
         @endphp
@@ -44,10 +44,9 @@
         @elseif($page == 'manage-user')
             @include('pages.admin.components.manage-user')
         @else
-            <p class="text-gray-700">Page not found.</p>
+            <p class="text-gray-700 text-lg">Page not found.</p>
         @endif
     </main>
-
 </div>
 
 @endsection
