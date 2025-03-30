@@ -18,7 +18,7 @@
                 <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
             </div>
             <div class="relative ml-4">
-                <img alt="User  profile picture" class="rounded-full border border-gray-300 transition duration-200 hover:shadow-lg" height="40" src="https://storage.googleapis.com/a1aa/image/OUtcNaFIYvvA83Pfx7zKJTkmB6V7otgm6ENk7-9B_EE.jpg" width="40"/>
+                <img alt="User  profile picture" class="rounded-full border border-gray-300 transition duration-200 hover:shadow-lg" height="40" src="../../images/jeyk.jpg" width="40"/>
                 <span class="absolute bottom-0 right-0 h-3 w-3 bg-green-500 border-2 border-white rounded-full"></span>
             </div>
         </div>

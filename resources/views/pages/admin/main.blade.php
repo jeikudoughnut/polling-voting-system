@@ -6,9 +6,9 @@
 
 @include('global.topbar')
 
-<div class="flex min-h-screen border border-gray-300">
+<div class="flex border border-gray-300">
     <!-- Sidebar -->
-    <aside class="bg-white w-64 p-6 h-screen shadow-lg border-r border-gray-50 rounded-lg">
+    <aside class="bg-white w-64 p-6 shadow-lg border-r border-gray-50">
         <ul class="space-y-2">
             <li>
                 <a class="flex items-center p-3 text-gray-700 text-xl hover:bg-gray-200 rounded-lg" href="?page=dashboard">
@@ -25,14 +25,14 @@
             <li>
                 <a class="flex items-center p-3 text-gray-700 text-xl hover:bg-gray-200 rounded-lg" href="?page=manage-user">
                     <i class="fas fa-users-cog mr-3"></i>
-                    <span class="whitespace-nowrap">User Management</span>
+                    <span class="whitespace-nowrap">Manage User</span>
                 </a>
             </li>
         </ul>
     </aside>
 
     <!-- Main Content -->
-    <main class="flex-1 p-10 bg-gray-100 border-l border-gray-300">
+    <main class="flex-1 p-5 bg-gray-100 border-l border-gray-300 h-screen">
         @php
             $page = request()->get('page', 'dashboard');
         @endphp
