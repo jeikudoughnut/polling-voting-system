@@ -23,23 +23,33 @@
                     </a>
                 </li>
                 <li>
-                    <a class="relative flex items-center p-4 text-gray-700 text-base hover:bg-yellow-50 hover:text-yellow-600 rounded-2xl transition-all duration-300 group {{ request()->get('page') == 'create-poll' ? 'bg-yellow-50 text-yellow-600 shadow-sm' : '' }}" 
-                       href="?page=create-poll">
+                    <a class="relative flex items-center p-4 text-gray-700 text-base hover:bg-yellow-50 hover:text-yellow-600 rounded-2xl transition-all duration-300 group {{ request()->get('page') == 'polls' ? 'bg-yellow-50 text-yellow-600 shadow-sm' : '' }}" 
+                       href="?page=polls">
                         <div class="absolute inset-0 bg-yellow-100 opacity-0 group-hover:opacity-10 rounded-2xl transition-opacity duration-300"></div>
-                        <div class="relative flex items-center justify-center w-10 h-10 rounded-xl bg-yellow-200 group-hover:bg-yellow-300 transition-colors duration-300 {{ request()->get('page') == 'create-poll' ? 'bg-yellow-300' : '' }}">
-                            <i class="fas fa-poll text-yellow-600 group-hover:text-yellow-700 {{ request()->get('page') == 'create-poll' ? 'text-yellow-700' : '' }}"></i>
+                        <div class="relative flex items-center justify-center w-10 h-10 rounded-xl bg-yellow-200 group-hover:bg-yellow-300 transition-colors duration-300 {{ request()->get('page') == 'polls' ? 'bg-yellow-300' : '' }}">
+                            <i class="fas fa-poll text-yellow-600 group-hover:text-yellow-700 {{ request()->get('page') == 'polls' ? 'text-yellow-700' : '' }}"></i>
                         </div>
-                        <span class="ml-4 font-medium">Poll Management</span>
+                        <span class="ml-4 font-medium">Polls</span>
                     </a>
                 </li>
                 <li>
-                    <a class="relative flex items-center p-4 text-gray-700 text-base hover:bg-green-50 hover:text-green-600 rounded-2xl transition-all duration-300 group {{ request()->get('page') == 'manage-user' ? 'bg-green-50 text-green-600 shadow-sm' : '' }}" 
-                       href="?page=manage-user">
-                        <div class="absolute inset-0 bg-green-100 opacity-0 group-hover:opacity-10 rounded-2xl transition-opacity duration-300"></div>
-                        <div class="relative flex items-center justify-center w-10 h-10 rounded-xl bg-green-200 group-hover:bg-green-300 transition-colors duration-300 {{ request()->get('page') == 'manage-user' ? 'bg-green-300' : '' }}">
-                            <i class="fas fa-users-cog text-green-600 group-hover:text-green-700 {{ request()->get('page') == 'manage-user' ? 'text-green-700' : '' }}"></i>
+                    <a class="relative flex items-center p-4 text-gray-700 text-base hover:bg-purple-50 hover:text-purple-600 rounded-2xl transition-all duration-300 group {{ request()->get('page') == 'create-poll' ? 'bg-purple-50 text-purple-600 shadow-sm' : '' }}" 
+                       href="?page=create-poll">
+                        <div class="absolute inset-0 bg-purple-100 opacity-0 group-hover:opacity-10 rounded-2xl transition-opacity duration-300"></div>
+                        <div class="relative flex items-center justify-center w-10 h-10 rounded-xl bg-purple-200 group-hover:bg-purple-300 transition-colors duration-300 {{ request()->get('page') == 'create-poll' ? 'bg-purple-300' : '' }}">
+                            <i class="fas fa-users-cog text-purple-600 group-hover:text-purple-700 {{ request()->get('page') == 'create-poll' ? 'text-purple-700' : '' }}"></i>
                         </div>
-                        <span class="ml-4 font-medium">Manage User</span>
+                        <span class="ml-4 font-medium">Create Poll</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="relative flex items-center p-4 text-gray-700 text-base hover:bg-green-50 hover:text-green-600 rounded-2xl transition-all duration-300 group {{ request()->get('page') == 'results' ? 'bg-green-50 text-green-600 shadow-sm' : '' }}" 
+                       href="?page=results">
+                        <div class="absolute inset-0 bg-green-100 opacity-0 group-hover:opacity-10 rounded-2xl transition-opacity duration-300"></div>
+                        <div class="relative flex items-center justify-center w-10 h-10 rounded-xl bg-green-200 group-hover:bg-green-300 transition-colors duration-300 {{ request()->get('page') == 'results' ? 'bg-green-300' : '' }}">
+                            <i class="fas fa-vote-yea text-green-600 group-hover:text-green-700 {{ request()->get('page') == 'results' ? 'text-green-700' : '' }}"></i>
+                        </div>
+                        <span class="ml-4 font-medium">Results</span>
                     </a>
                 </li>
             </ul>
