@@ -23,7 +23,7 @@
                 </div>
             </div>
             <!-- Total Polls -->
-            <a href="/admin?page=create-poll&tab=all" class="relative bg-gradient-to-br from-blue-100 to-blue-50 rounded-2xl flex flex-col items-center justify-center h-72 shadow-xl border border-blue-100 group hover:scale-[1.02] transition-all duration-300">
+            <a href="/admin?page=poll-management&tab=all" class="relative bg-gradient-to-br from-blue-100 to-blue-50 rounded-2xl flex flex-col items-center justify-center h-72 shadow-xl border border-blue-100 group hover:scale-[1.02] transition-all duration-300">
                 <div class="absolute top-0 right-0 w-20 h-20 bg-blue-200 rounded-full -mr-8 -mt-8 opacity-20"></div>
                 <div class="absolute bottom-0 left-0 w-20 h-20 bg-blue-200 rounded-full -ml-8 -mb-8 opacity-20"></div>
                 <div class="bg-blue-200 p-5 rounded-full mb-6 group-hover:scale-110 transition-transform duration-300 shadow">
@@ -42,7 +42,7 @@
                 </div>
             </a>
             <!-- Pending Polls -->
-            <a href="/admin?page=create-poll&tab=pending" class="relative bg-gradient-to-br from-yellow-100 to-yellow-50 rounded-2xl flex flex-col items-center justify-center h-72 shadow-xl border border-yellow-100 group hover:scale-[1.02] transition-all duration-300">
+            <a href="/admin?page=poll-management&tab=pending" class="relative bg-gradient-to-br from-yellow-100 to-yellow-50 rounded-2xl flex flex-col items-center justify-center h-72 shadow-xl border border-yellow-100 group hover:scale-[1.02] transition-all duration-300">
                 <div class="absolute top-0 right-0 w-20 h-20 bg-yellow-200 rounded-full -mr-8 -mt-8 opacity-20"></div>
                 <div class="absolute bottom-0 left-0 w-20 h-20 bg-yellow-200 rounded-full -ml-8 -mb-8 opacity-20"></div>
                 <div class="bg-yellow-200 p-5 rounded-full mb-6 group-hover:scale-110 transition-transform duration-300 shadow">
