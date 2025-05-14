@@ -19,5 +19,5 @@ Route::get('/admin', function () {
 });
 
 Route::get('/user-dashboard', function () {
-    return view('pages.user.dashboard');
+    return view('pages.user.main');
 });

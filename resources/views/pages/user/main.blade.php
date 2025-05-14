@@ -23,11 +23,11 @@
                     </a>
                 </li>
                 <li>
-                    <a class="relative flex items-center p-4 text-gray-700 text-base hover:bg-yellow-50 hover:text-yellow-600 rounded-2xl transition-all duration-300 group {{ request()->get('page') == 'poll-management' ? 'bg-yellow-50 text-yellow-600 shadow-sm' : '' }}" 
-                       href="?page=poll-management">
+                    <a class="relative flex items-center p-4 text-gray-700 text-base hover:bg-yellow-50 hover:text-yellow-600 rounded-2xl transition-all duration-300 group {{ request()->get('page') == 'create-poll' ? 'bg-yellow-50 text-yellow-600 shadow-sm' : '' }}" 
+                       href="?page=create-poll">
                         <div class="absolute inset-0 bg-yellow-100 opacity-0 group-hover:opacity-10 rounded-2xl transition-opacity duration-300"></div>
-                        <div class="relative flex items-center justify-center w-10 h-10 rounded-xl bg-yellow-200 group-hover:bg-yellow-300 transition-colors duration-300 {{ request()->get('page') == 'poll-management' ? 'bg-yellow-300' : '' }}">
-                            <i class="fas fa-poll text-yellow-600 group-hover:text-yellow-700 {{ request()->get('page') == 'poll-management' ? 'text-yellow-700' : '' }}"></i>
+                        <div class="relative flex items-center justify-center w-10 h-10 rounded-xl bg-yellow-200 group-hover:bg-yellow-300 transition-colors duration-300 {{ request()->get('page') == 'create-poll' ? 'bg-yellow-300' : '' }}">
+                            <i class="fas fa-poll text-yellow-600 group-hover:text-yellow-700 {{ request()->get('page') == 'create-poll' ? 'text-yellow-700' : '' }}"></i>
                         </div>
                         <span class="ml-4 font-medium">Poll Management</span>
                     </a>
@@ -53,13 +53,14 @@
         @endphp
 
         <div class="max-w-7xl mx-auto">
-            @if($page == 'poll-management')
-                @include('pages.admin.components.poll-management')
+            @if($page == 'create-poll')
+                @include('pages.user.components.create-poll')
             @elseif($page == 'dashboard')
-                @include('pages.admin.components.dashboard')
-            @elseif($page == 'manage-user')
-                @include('pages.admin.components.manage-user')
-            @else
+                @include('pages.user.components.dashboard')
+            @elseif($page == 'polls')
+                @include('pages.user.components.polls')
+            @else ($page == 'results')
+                @include('pages.user.components.results')
                 <div class="bg-white rounded-xl p-8 shadow-sm">
                     <p class="text-gray-700 text-lg">Page not found.</p>
                 </div>
