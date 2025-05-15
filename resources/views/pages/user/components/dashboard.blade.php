@@ -5,7 +5,7 @@
         </h1>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
             <!-- All Polls -->
-            <div class="relative bg-gradient-to-br from-blue-100 to-blue-50 rounded-2xl flex flex-col items-center justify-center h-48 shadow-xl border border-blue-100 group hover:scale-[1.02] transition-all duration-300 overflow-hidden">
+            <a href="/user-dashboard?page=polls&tab=polls" class="relative bg-gradient-to-br from-blue-100 to-blue-50 rounded-2xl flex flex-col items-center justify-center h-48 shadow-xl border border-blue-100 group hover:scale-[1.02] transition-all duration-300 overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-400">
                 <div class="absolute top-0 right-0 w-20 h-20 bg-blue-200 rounded-full -mr-8 -mt-8 opacity-30 blur-sm"></div>
                 <div class="absolute bottom-0 left-0 w-20 h-20 bg-blue-200 rounded-full -ml-8 -mb-8 opacity-30 blur-sm"></div>
                 <div class="bg-blue-200/80 p-4 rounded-full mb-3 group-hover:scale-110 transition-transform duration-300 shadow-md">
@@ -16,9 +16,9 @@
                 </div>
                 <div class="text-4xl font-black text-blue-700 mb-1 tracking-tight">5</div>
                 <div class="text-lg font-semibold text-blue-600">All Polls</div>
-            </div>
+            </a>
             <!-- Participated Polls -->
-            <div class="relative bg-gradient-to-br from-purple-100 to-purple-50 rounded-2xl flex flex-col items-center justify-center h-48 shadow-xl border border-purple-100 group hover:scale-[1.02] transition-all duration-300 overflow-hidden">
+            <a href="/user-dashboard?page=polls&tab=myvotes" class="relative bg-gradient-to-br from-purple-100 to-purple-50 rounded-2xl flex flex-col items-center justify-center h-48 shadow-xl border border-purple-100 group hover:scale-[1.02] transition-all duration-300 overflow-hidden focus:outline-none focus:ring-2 focus:ring-purple-400">
                 <div class="absolute top-0 right-0 w-20 h-20 bg-purple-200 rounded-full -mr-8 -mt-8 opacity-30 blur-sm"></div>
                 <div class="absolute bottom-0 left-0 w-20 h-20 bg-purple-200 rounded-full -ml-8 -mb-8 opacity-30 blur-sm"></div>
                 <div class="bg-purple-200/80 p-4 rounded-full mb-3 group-hover:scale-110 transition-transform duration-300 shadow-md">
@@ -31,9 +31,9 @@
                 </div>
                 <div class="text-4xl font-black text-purple-700 mb-1 tracking-tight">3</div>
                 <div class="text-lg font-semibold text-purple-600">Participated Polls</div>
-            </div>
+            </a>
             <!-- Created Polls -->
-            <div class="relative bg-gradient-to-br from-green-100 to-green-50 rounded-2xl flex flex-col items-center justify-center h-48 shadow-xl border border-green-100 group hover:scale-[1.02] transition-all duration-300 overflow-hidden">
+            <a href="/user-dashboard?page=polls&tab=mycreated" class="relative bg-gradient-to-br from-green-100 to-green-50 rounded-2xl flex flex-col items-center justify-center h-48 shadow-xl border border-green-100 group hover:scale-[1.02] transition-all duration-300 overflow-hidden focus:outline-none focus:ring-2 focus:ring-green-400">
                 <div class="absolute top-0 right-0 w-20 h-20 bg-green-200 rounded-full -mr-8 -mt-8 opacity-30 blur-sm"></div>
                 <div class="absolute bottom-0 left-0 w-20 h-20 bg-green-200 rounded-full -ml-8 -mb-8 opacity-30 blur-sm"></div>
                 <div class="bg-green-200/80 p-4 rounded-full mb-3 group-hover:scale-110 transition-transform duration-300 shadow-md">
@@ -43,7 +43,7 @@
                 </div>
                 <div class="text-4xl font-black text-green-700 mb-1 tracking-tight">3</div>
                 <div class="text-lg font-semibold text-green-600">Created Polls</div>
-            </div>
+            </a>
         </div>
         
         <!-- Trending Polls -->

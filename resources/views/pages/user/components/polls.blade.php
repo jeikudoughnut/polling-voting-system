@@ -270,9 +270,9 @@
                             Next <i class="fas fa-chevron-right ml-2"></i>
                         </button>
                     </div>
-                    <button class="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 font-semibold transition-all duration-200 shadow-md hover:shadow-lg">
+                    <a href="/user-dashboard?page=create-poll" class="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 font-semibold transition-all duration-200 shadow-md hover:shadow-lg">
                         <i class="fas fa-plus mr-2"></i> Create Poll
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>
