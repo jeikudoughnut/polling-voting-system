@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PollController;
 
 Route::get('/', function () {
     return view('layouts.app');
@@ -21,3 +22,5 @@ Route::get('/admin', function () {
 Route::get('/user-dashboard', function () {
     return view('pages.user.main');
 });
+
+Route::get('/polls', [PollController::class, 'index'])->name('polls');

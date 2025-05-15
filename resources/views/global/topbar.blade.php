@@ -41,7 +41,7 @@
                             src="../../images/jeyk.jpg"
                         />
                         <div class="flex flex-col">
-                            <span class="text-sm font-semibold text-gray-700">Admin User</span>
+                            <span class="text-sm font-semibold text-gray-700">Jake</span>
                             <span class="text-xs text-gray-500">Administrator</span>
                         </div>
                         <i class="fas fa-chevron-down text-gray-400 text-sm"></i>

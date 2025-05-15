@@ -69,8 +69,9 @@
                 @include('pages.user.components.dashboard')
             @elseif($page == 'polls')
                 @include('pages.user.components.polls')
-            @else ($page == 'results')
+            @elseif($page == 'results')
                 @include('pages.user.components.results')
+            @else
                 <div class="bg-white rounded-xl p-8 shadow-sm">
                     <p class="text-gray-700 text-lg">Page not found.</p>
                 </div>

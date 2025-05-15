@@ -1,4 +1,4 @@
-<div class="w-full min-h-screen bg-gradient-to-br from-gray-50 to-white pt-4 pb-6 px-6">
+<div class="w-full min-h-screen pt-8 pb-12 px-6">
     <div class="w-full">
         <h1 class="text-5xl font-extrabold text-gray-800 mb-6 text-center tracking-tight drop-shadow-sm">
             Dashboard Overview
