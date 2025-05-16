@@ -5,51 +5,89 @@
   <div class="max-w-md w-full bg-white rounded-xl shadow-lg p-8">
     <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center">Sign Up</h2>
     
-    <form class="space-y-4">
+    @if ($errors->any())
+    <div class="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+        <ul class="list-disc list-inside text-sm text-red-600">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+
+    <form method="POST" action="{{ route('register') }}" class="space-y-4">
+      @csrf
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
         <input 
-          type="email" 
+          type="email"
+          id="email"
+          name="email"
+          value="{{ old('email') }}"
           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
           placeholder="your@email.com"
+          required
         />
       </div>
       
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Username</label>
+        <label for="username" class="block text-sm font-medium text-gray-700 mb-1">Username</label>
         <input 
-          type="text" 
+          type="text"
+          id="username"
+          name="username"
+          value="{{ old('username') }}"
           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
           placeholder="Your username"
+          required
+        />
+      </div>
+
+      <div>
+        <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+        <input 
+          type="text"
+          id="name"
+          name="name"
+          value="{{ old('name') }}"
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
+          placeholder="Your full name"
+          required
         />
       </div>
       
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+        <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
         <input 
-          type="password" 
+          type="password"
+          id="password"
+          name="password"
           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
           placeholder="••••••••"
+          required
         />
       </div>
       
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
+        <label for="password_confirmation" class="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
         <input 
-          type="password" 
+          type="password"
+          id="password_confirmation"
+          name="password_confirmation"
           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
           placeholder="••••••••"
+          required
         />
       </div>
       
-      <button class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 rounded-lg transition-colors">
+      <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 rounded-lg transition-colors">
         Sign Up
       </button>
     </form>
     
     <div class="mt-6 text-center text-sm text-gray-600">
       Already have an account? 
-      <a href="/login" class="text-indigo-600 hover:text-indigo-500 font-medium">Sign in</a>
+      <a href="{{ route('login') }}" class="text-indigo-600 hover:text-indigo-500 font-medium">Sign in</a>
     </div>
   </div>
 </div>
