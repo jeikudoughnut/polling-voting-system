@@ -23,7 +23,7 @@
                 </div>
             </div>
             <!-- Total Polls -->
-            <a href="/admin?page=poll-management&tab=all" class="relative bg-gradient-to-br from-blue-100 to-blue-50 rounded-2xl flex flex-col items-center justify-center h-72 shadow-xl border border-blue-100 group hover:scale-[1.02] transition-all duration-300">
+            <a href="?page=poll-management&tab=all" class="relative bg-gradient-to-br from-blue-100 to-blue-50 rounded-2xl flex flex-col items-center justify-center h-72 shadow-xl border border-blue-100 group hover:scale-[1.02] transition-all duration-300">
                 <div class="absolute top-0 right-0 w-20 h-20 bg-blue-200 rounded-full -mr-8 -mt-8 opacity-20"></div>
                 <div class="absolute bottom-0 left-0 w-20 h-20 bg-blue-200 rounded-full -ml-8 -mb-8 opacity-20"></div>
                 <div class="bg-blue-200 p-5 rounded-full mb-6 group-hover:scale-110 transition-transform duration-300 shadow">
@@ -32,17 +32,19 @@
                         <path d="M9 12l2 2l4-4" stroke="currentColor" stroke-width="2.5" fill="none"/>
                     </svg>
                 </div>
-                <div class="text-6xl font-black text-blue-700 mb-2 tracking-tight">10</div>
+                <div class="text-6xl font-black text-blue-700 mb-2 tracking-tight" id="totalPollsCount">
+                    <i class="fas fa-spinner fa-spin"></i>
+                </div>
                 <div class="text-2xl font-semibold text-blue-600 mb-1">Total Polls</div>
                 <div class="flex items-center space-x-1 text-base text-blue-500">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
                     </svg>
-                    <span>+2 from last month</span>
+                    <span id="totalPollsGrowth">Loading...</span>
                 </div>
             </a>
             <!-- Pending Polls -->
-            <a href="/admin?page=poll-management&tab=pending" class="relative bg-gradient-to-br from-yellow-100 to-yellow-50 rounded-2xl flex flex-col items-center justify-center h-72 shadow-xl border border-yellow-100 group hover:scale-[1.02] transition-all duration-300">
+            <a href="?page=poll-management&tab=pending" class="relative bg-gradient-to-br from-yellow-100 to-yellow-50 rounded-2xl flex flex-col items-center justify-center h-72 shadow-xl border border-yellow-100 group hover:scale-[1.02] transition-all duration-300">
                 <div class="absolute top-0 right-0 w-20 h-20 bg-yellow-200 rounded-full -mr-8 -mt-8 opacity-20"></div>
                 <div class="absolute bottom-0 left-0 w-20 h-20 bg-yellow-200 rounded-full -ml-8 -mb-8 opacity-20"></div>
                 <div class="bg-yellow-200 p-5 rounded-full mb-6 group-hover:scale-110 transition-transform duration-300 shadow">
@@ -51,10 +53,12 @@
                         <path d="M12 7v5l3 3" stroke="currentColor" stroke-width="2.5" fill="none"/>
                     </svg>
                 </div>
-                <div class="text-6xl font-black text-yellow-700 mb-2 tracking-tight">5</div>
+                <div class="text-6xl font-black text-yellow-700 mb-2 tracking-tight" id="pendingPollsCount">
+                    <i class="fas fa-spinner fa-spin"></i>
+                </div>
                 <div class="text-2xl font-semibold text-yellow-600 mb-1">Pending Polls</div>
-                <div class="px-4 py-1 bg-yellow-100 rounded-full text-base font-medium text-yellow-700">
-                    Requires attention
+                <div class="px-4 py-1 bg-yellow-100 rounded-full text-base font-medium text-yellow-700" id="pendingPollsStatus">
+                    Loading...
                 </div>
             </a>
         </div>
@@ -64,15 +68,98 @@
 <!-- Chart.js CDN -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    // Poll Activity Chart
-    var activityCtx = document.getElementById('pollActivityChart').getContext('2d');
-    var activityChart = new Chart(activityCtx, {
+// Global variables for charts
+let activityChart = null;
+let distributionChart = null;
+
+// Fetch dashboard data
+async function loadDashboardData() {
+    try {
+        const response = await fetch('/admin/dashboard-data', {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Accept': 'application/json',
+            }
+        });
+        
+        if (!response.ok) {
+            throw new Error('Failed to fetch dashboard data');
+        }
+        
+        const data = await response.json();
+        updateDashboard(data);
+        
+    } catch (error) {
+        console.error('Error loading dashboard data:', error);
+        // Show fallback data
+        updateDashboard({
+            totalPolls: 0,
+            pendingPolls: 0,
+            activePolls: 0,
+            closedPolls: 0,
+            totalVotes: 0,
+            pollActivity: [],
+            trendingPolls: []
+        });
+    }
+}
+
+function updateDashboard(data) {
+    // Update total polls
+    document.getElementById('totalPollsCount').textContent = data.totalPolls;
+    
+    // Update pending polls
+    document.getElementById('pendingPollsCount').textContent = data.pendingPolls;
+    document.getElementById('pendingPollsStatus').textContent = 
+        data.pendingPolls > 0 ? 'Requires attention' : 'All caught up!';
+    
+    // Update growth indicator (mock calculation)
+    const growthText = data.totalPolls > 10 ? `+${Math.floor(data.totalPolls * 0.1)} from last month` : 'Getting started';
+    document.getElementById('totalPollsGrowth').textContent = growthText;
+    
+    // Create charts
+    createActivityChart(data.pollActivity);
+    createDistributionChart(data);
+}
+
+function createActivityChart(activityData) {
+    const ctx = document.getElementById('pollActivityChart').getContext('2d');
+    
+    // Destroy existing chart
+    if (activityChart) {
+        activityChart.destroy();
+    }
+    
+    // Process activity data for chart
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+    const activeData = new Array(6).fill(0);
+    const completedData = new Array(6).fill(0);
+    
+    // If we have real data, process it
+    if (activityData && activityData.length > 0) {
+        activityData.forEach(item => {
+            const monthIndex = item.month - 1;
+            if (monthIndex >= 0 && monthIndex < 6) {
+                if (item.status === 'active') {
+                    activeData[monthIndex] = item.count;
+                } else if (item.status === 'closed') {
+                    completedData[monthIndex] = item.count;
+                }
+            }
+        });
+    } else {
+        // Use sample data if no real data
+        activeData.splice(0, 6, 3, 7, 5, 4, 6, 5);
+        completedData.splice(0, 6, 1, 2, 3, 2, 3, 4);
+    }
+    
+    activityChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+            labels: months,
             datasets: [{
                 label: 'Active Polls',
-                data: [3, 7, 5, 4, 6, 5],
+                data: activeData,
                 borderColor: 'rgba(16, 185, 129, 1)',
                 backgroundColor: 'rgba(16, 185, 129, 0.1)',
                 tension: 0.4,
@@ -81,7 +168,7 @@
                 pointHoverRadius: 7
             }, {
                 label: 'Completed Polls',
-                data: [1, 2, 3, 2, 3, 4],
+                data: completedData,
                 borderColor: 'rgba(239, 68, 68, 1)',
                 backgroundColor: 'rgba(239, 68, 68, 0.1)',
                 tension: 0.4,
@@ -94,22 +181,47 @@
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
-                legend: { position: 'bottom' }
+                legend: { position: 'bottom' },
+                tooltip: {
+                    backgroundColor: 'rgba(17, 24, 39, 0.9)',
+                    padding: 12,
+                    titleFont: { size: 14, weight: 'bold' },
+                    bodyFont: { size: 13 },
+                }
             },
             scales: {
-                y: { beginAtZero: true }
+                y: { 
+                    beginAtZero: true,
+                    ticks: { 
+                        stepSize: 1,
+                        color: '#6B7280',
+                        font: { size: 12, weight: 'medium' }
+                    },
+                    grid: { color: '#E5E7EB', drawBorder: false }
+                },
+                x: {
+                    ticks: { color: '#6B7280', font: { size: 12, weight: 'medium' } },
+                    grid: { display: false }
+                }
             }
         }
     });
+}
 
-    // Poll Distribution Chart
-    var distributionCtx = document.getElementById('pollDistributionChart').getContext('2d');
-    var distributionChart = new Chart(distributionCtx, {
+function createDistributionChart(data) {
+    const ctx = document.getElementById('pollDistributionChart').getContext('2d');
+    
+    // Destroy existing chart
+    if (distributionChart) {
+        distributionChart.destroy();
+    }
+    
+    distributionChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
             labels: ['Active', 'Pending', 'Closed'],
             datasets: [{
-                data: [6, 3, 1],
+                data: [data.activePolls || 0, data.pendingPolls || 0, data.closedPolls || 0],
                 backgroundColor: [
                     'rgba(16, 185, 129, 0.8)',
                     'rgba(251, 191, 36, 0.8)',
@@ -123,9 +235,26 @@
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
-                legend: { position: 'bottom' }
+                legend: { position: 'bottom' },
+                tooltip: {
+                    backgroundColor: 'rgba(17, 24, 39, 0.9)',
+                    padding: 12,
+                    titleFont: { size: 14, weight: 'bold' },
+                    bodyFont: { size: 13 },
+                    callbacks: {
+                        label: function(context) {
+                            return `${context.label}: ${context.parsed} polls`;
+                        }
+                    }
+                }
             },
             cutout: '70%'
         }
     });
+}
+
+// Load data when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    loadDashboardData();
+});
 </script>

@@ -540,4 +540,78 @@ class PollController extends Controller
             ], 500);
         }
     }
+
+    /**
+     * Get dashboard data for admin
+     */
+    public function adminDashboard()
+    {
+        // Get poll statistics
+        $totalPolls = Poll::count();
+        $pendingPolls = Poll::where('status', 'pending')->count();
+        $activePolls = Poll::where('status', 'active')->count();
+        $closedPolls = Poll::where('status', 'closed')->count();
+        
+        // Get total votes
+        $totalVotes = Vote::count();
+        
+        // Get poll activity by month (last 6 months)
+        $pollActivity = Poll::selectRaw('MONTH(creation_date) as month, YEAR(creation_date) as year, status, COUNT(*) as count')
+            ->where('creation_date', '>=', now()->subMonths(6))
+            ->groupBy('year', 'month', 'status')
+            ->orderBy('year')
+            ->orderBy('month')
+            ->get();
+        
+        // Get trending polls (top 5 by vote count)
+        $trendingPolls = Poll::withCount('votes')
+            ->orderBy('votes_count', 'desc')
+            ->limit(5)
+            ->get();
+        
+        return response()->json([
+            'totalPolls' => $totalPolls,
+            'pendingPolls' => $pendingPolls,
+            'activePolls' => $activePolls,
+            'closedPolls' => $closedPolls,
+            'totalVotes' => $totalVotes,
+            'pollActivity' => $pollActivity,
+            'trendingPolls' => $trendingPolls,
+        ]);
+    }
+
+    /**
+     * Get dashboard data for users
+     */
+    public function userDashboard()
+    {
+        $userId = Auth::id();
+        
+        // Get user-specific statistics
+        $totalPolls = Poll::where('status', 'active')->count();
+        $userVotes = Vote::where('user_id', $userId)->count();
+        $userCreatedPolls = Poll::where('creator_user_id', $userId)->count();
+        
+        // Get trending polls (top 5 by vote count)
+        $trendingPolls = Poll::where('status', 'active')
+            ->withCount('votes')
+            ->orderBy('votes_count', 'desc')
+            ->limit(5)
+            ->get();
+        
+        // Get user's recent activity
+        $recentVotes = Vote::where('user_id', $userId)
+            ->with(['poll', 'option'])
+            ->orderBy('vote_date', 'desc')
+            ->limit(5)
+            ->get();
+        
+        return response()->json([
+            'totalPolls' => $totalPolls,
+            'userVotes' => $userVotes,
+            'userCreatedPolls' => $userCreatedPolls,
+            'trendingPolls' => $trendingPolls,
+            'recentVotes' => $recentVotes,
+        ]);
+    }
 } 

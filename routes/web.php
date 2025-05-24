@@ -47,6 +47,7 @@ Route::middleware('auth')->group(function () {
             Route::resource('polls', PollController::class);
             Route::patch('polls/{poll}/status', [PollController::class, 'updateStatus'])->name('polls.status');
             Route::get('polls-data', [PollController::class, 'getPollsByStatus'])->name('polls.data');
+            Route::get('dashboard-data', [PollController::class, 'adminDashboard'])->name('dashboard.data');
         });
     });
 
@@ -73,6 +74,7 @@ Route::middleware('auth')->group(function () {
         Route::get('my-votes', [PollController::class, 'myVotes'])->name('polls.my-votes');
         Route::get('my-polls', [PollController::class, 'myPolls'])->name('polls.my-polls');
         Route::post('polls', [PollController::class, 'userStore'])->name('polls.store');
+        Route::get('dashboard-data', [PollController::class, 'userDashboard'])->name('dashboard.data');
     });
 });
 
