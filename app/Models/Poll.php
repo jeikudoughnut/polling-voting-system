@@ -13,11 +13,14 @@ class Poll extends Model
         'poll_title',
         'poll_description',
         'creation_date',
-        'creator_user_id'
+        'creator_user_id',
+        'status',
+        'end_date'
     ];
 
     protected $casts = [
-        'creation_date' => 'datetime'
+        'creation_date' => 'datetime',
+        'end_date' => 'datetime'
     ];
 
     public function creator()
@@ -38,5 +41,51 @@ class Poll extends Model
     public function reports()
     {
         return $this->hasMany(Report::class);
+    }
+
+    // Accessor for formatted creation date
+    public function getFormattedCreationDateAttribute()
+    {
+        return $this->creation_date ? $this->creation_date->format('M d, Y h:i A') : '';
+    }
+
+    // Accessor for formatted end date
+    public function getFormattedEndDateAttribute()
+    {
+        return $this->end_date ? $this->end_date->format('M d, Y h:i A') : 'No expiration';
+    }
+
+    // Check if poll is active
+    public function getIsActiveAttribute()
+    {
+        return $this->status === 'active' && (!$this->end_date || $this->end_date > now());
+    }
+
+    // Check if poll is expired
+    public function getIsExpiredAttribute()
+    {
+        return $this->end_date && $this->end_date < now();
+    }
+
+    // Scope for active polls
+    public function scopeActive($query)
+    {
+        return $query->where('status', 'active')
+                    ->where(function($q) {
+                        $q->whereNull('end_date')
+                          ->orWhere('end_date', '>', now());
+                    });
+    }
+
+    // Scope for pending polls
+    public function scopePending($query)
+    {
+        return $query->where('status', 'pending');
+    }
+
+    // Scope for closed polls
+    public function scopeClosed($query)
+    {
+        return $query->where('status', 'closed');
     }
 }
