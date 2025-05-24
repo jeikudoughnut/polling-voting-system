@@ -14,7 +14,12 @@ class Vote extends Model
         'poll_id',
         'question_id',
         'option_id',
-        'vote_response'
+        'vote_response',
+        'vote_date'
+    ];
+
+    protected $casts = [
+        'vote_date' => 'datetime',
     ];
 
     public function user()

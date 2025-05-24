@@ -64,6 +64,16 @@ Route::middleware('auth')->group(function () {
             'is_admin' => \Illuminate\Support\Facades\Auth::user()->user_type === 'admin'
         ]);
     });
+
+    // User poll routes
+    Route::prefix('user')->name('user.')->group(function () {
+        Route::get('polls', [PollController::class, 'userIndex'])->name('polls.index');
+        Route::get('polls/{poll}', [PollController::class, 'userShow'])->name('polls.show');
+        Route::post('polls/{poll}/vote', [PollController::class, 'vote'])->name('polls.vote');
+        Route::get('my-votes', [PollController::class, 'myVotes'])->name('polls.my-votes');
+        Route::get('my-polls', [PollController::class, 'myPolls'])->name('polls.my-polls');
+        Route::post('polls', [PollController::class, 'userStore'])->name('polls.store');
+    });
 });
 
 Route::get('/', function () {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Poll;
 use App\Models\PollQuestion;
 use App\Models\PollOption;
+use App\Models\Vote;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -247,5 +248,296 @@ class PollController extends Controller
             'success' => true,
             'polls' => $polls,
         ]);
+    }
+
+    /**
+     * User-specific methods
+     */
+
+    /**
+     * Display polls for regular users
+     */
+    public function userIndex(Request $request)
+    {
+        $polls = Poll::active()
+            ->with(['questions.options', 'creator'])
+            ->orderBy('creation_date', 'desc')
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'polls' => $polls->map(function ($poll) {
+                return [
+                    'id' => $poll->id,
+                    'title' => $poll->poll_title,
+                    'description' => $poll->poll_description,
+                    'status' => $poll->status,
+                    'end_date' => $poll->end_date,
+                    'formatted_end_date' => $poll->formatted_end_date,
+                    'creator' => $poll->creator->name ?? 'Unknown',
+                    'questions' => $poll->questions->map(function ($question) {
+                        return [
+                            'id' => $question->id,
+                            'text' => $question->question_text,
+                            'type' => $question->question_type,
+                            'options' => $question->options->map(function ($option) {
+                                return [
+                                    'id' => $option->id,
+                                    'text' => $option->option_text,
+                                ];
+                            }),
+                        ];
+                    }),
+                    'user_voted' => $poll->votes()->where('user_id', Auth::id())->exists(),
+                ];
+            }),
+        ]);
+    }
+
+    /**
+     * Show poll details for users
+     */
+    public function userShow(Poll $poll)
+    {
+        $poll->load(['questions.options', 'creator']);
+        
+        // Check if user has already voted
+        $userVoted = $poll->votes()->where('user_id', Auth::id())->exists();
+        
+        return response()->json([
+            'success' => true,
+            'poll' => [
+                'id' => $poll->id,
+                'title' => $poll->poll_title,
+                'description' => $poll->poll_description,
+                'status' => $poll->status,
+                'end_date' => $poll->end_date,
+                'formatted_end_date' => $poll->formatted_end_date,
+                'creator' => $poll->creator->name ?? 'Unknown',
+                'questions' => $poll->questions->map(function ($question) {
+                    return [
+                        'id' => $question->id,
+                        'text' => $question->question_text,
+                        'type' => $question->question_type,
+                        'options' => $question->options->map(function ($option) {
+                            return [
+                                'id' => $option->id,
+                                'text' => $option->option_text,
+                            ];
+                        }),
+                    ];
+                }),
+                'user_voted' => $userVoted,
+            ],
+        ]);
+    }
+
+    /**
+     * Handle user voting
+     */
+    public function vote(Request $request, Poll $poll)
+    {
+        // Check if poll is active
+        if ($poll->status !== 'active') {
+            return response()->json([
+                'success' => false,
+                'message' => 'This poll is not active.',
+            ], 400);
+        }
+
+        // Check if poll has expired
+        if ($poll->end_date && $poll->end_date < now()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'This poll has expired.',
+            ], 400);
+        }
+
+        // Check if user has already voted
+        if ($poll->votes()->where('user_id', Auth::id())->exists()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'You have already voted on this poll.',
+            ], 400);
+        }
+
+        $validated = $request->validate([
+            'question_id' => 'required|exists:poll_questions,id',
+            'option_ids' => 'required|array|min:1',
+            'option_ids.*' => 'required|exists:poll_options,id',
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            $question = PollQuestion::findOrFail($validated['question_id']);
+            
+            // Validate that question belongs to this poll
+            if ($question->poll_id !== $poll->id) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Invalid question for this poll.',
+                ], 400);
+            }
+
+            // Check if multiple options are allowed
+            if ($question->question_type === 'single_choice' && count($validated['option_ids']) > 1) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Only one option can be selected for this question.',
+                ], 400);
+            }
+
+            // Create votes
+            foreach ($validated['option_ids'] as $optionId) {
+                $option = PollOption::findOrFail($optionId);
+                
+                // Validate that option belongs to this question
+                if ($option->question_id !== $question->id) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Invalid option for this question.',
+                    ], 400);
+                }
+
+                Vote::create([
+                    'user_id' => Auth::id(),
+                    'poll_id' => $poll->id,
+                    'question_id' => $question->id,
+                    'option_id' => $option->id,
+                    'vote_date' => now(),
+                ]);
+            }
+
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Vote submitted successfully!',
+            ]);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to submit vote. Please try again.',
+            ], 500);
+        }
+    }
+
+    /**
+     * Get user's voting history
+     */
+    public function myVotes()
+    {
+        $votes = Vote::where('user_id', Auth::id())
+            ->with(['poll', 'question', 'option'])
+            ->orderBy('vote_date', 'desc')
+            ->get()
+            ->groupBy('poll_id');
+
+        $pollsVoted = [];
+        foreach ($votes as $pollId => $pollVotes) {
+            $poll = $pollVotes->first()->poll;
+            $pollsVoted[] = [
+                'id' => $poll->id,
+                'title' => $poll->poll_title,
+                'status' => $poll->status,
+                'vote_date' => $pollVotes->first()->vote_date->format('M d, Y h:i A'),
+                'votes_count' => $pollVotes->count(),
+            ];
+        }
+
+        return response()->json([
+            'success' => true,
+            'polls' => $pollsVoted,
+        ]);
+    }
+
+    /**
+     * Get user's created polls
+     */
+    public function myPolls()
+    {
+        $polls = Poll::where('creator_user_id', Auth::id())
+            ->with(['questions.options', 'votes'])
+            ->orderBy('creation_date', 'desc')
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'polls' => $polls->map(function ($poll) {
+                return [
+                    'id' => $poll->id,
+                    'title' => $poll->poll_title,
+                    'status' => $poll->status,
+                    'creation_date' => $poll->formatted_creation_date,
+                    'votes_count' => $poll->votes->count(),
+                    'end_date' => $poll->formatted_end_date,
+                ];
+            }),
+        ]);
+    }
+
+    /**
+     * Store poll created by user
+     */
+    public function userStore(Request $request)
+    {
+        $validated = $request->validate([
+            'poll_title' => 'required|string|max:255',
+            'poll_description' => 'nullable|string|max:1000',
+            'question_text' => 'required|string|max:500',
+            'options' => 'required|array|min:2|max:10',
+            'options.*' => 'required|string|max:255|distinct',
+            'allow_multiple' => 'nullable|boolean',
+            'end_date' => 'nullable|date|after:now',
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            // Create the poll (users create polls with pending status)
+            $poll = Poll::create([
+                'poll_title' => $validated['poll_title'],
+                'poll_description' => $validated['poll_description'],
+                'creation_date' => now(),
+                'creator_user_id' => Auth::id(),
+                'status' => 'pending', // User polls start as pending
+                'end_date' => $validated['end_date'] ?? null,
+            ]);
+
+            // Create the question
+            $question = PollQuestion::create([
+                'poll_id' => $poll->id,
+                'question_text' => $validated['question_text'],
+                'question_type' => isset($validated['allow_multiple']) && $validated['allow_multiple'] ? 'multiple_choice' : 'single_choice',
+            ]);
+
+            // Create the options
+            foreach ($validated['options'] as $optionText) {
+                PollOption::create([
+                    'question_id' => $question->id,
+                    'option_text' => trim($optionText),
+                ]);
+            }
+
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Poll created successfully! It will be reviewed by administrators.',
+                'poll_id' => $poll->id,
+            ]);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to create poll. Please try again.',
+            ], 500);
+        }
     }
 } 

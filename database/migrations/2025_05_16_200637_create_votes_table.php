@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('question_id')->constrained('poll_questions')->onDelete('cascade');
             $table->foreignId('option_id')->constrained('poll_options')->onDelete('cascade');
             $table->text('vote_response')->nullable();
+            $table->timestamp('vote_date')->nullable();
             $table->timestamps();
         });
     }
