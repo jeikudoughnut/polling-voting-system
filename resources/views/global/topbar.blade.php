@@ -21,10 +21,10 @@
             <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
         </div>
         <div class="flex items-center space-x-4">
-            <button class="relative p-2 rounded-lg hover:bg-gray-100 transition-all duration-200" title="Notifications">
+            <!-- <button class="relative p-2 rounded-lg hover:bg-gray-100 transition-all duration-200" title="Notifications">
                 <i class="fas fa-bell text-xl text-gray-600 hover:text-blue-600"></i>
                 <span class="absolute -top-1 -right-1 h-4 w-4 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">3</span>
-            </button>
+            </button> -->
             <div class="relative">
                 <button 
                     id="userMenuButton" 
@@ -65,7 +65,7 @@
                     </div>
                     
                     <div class="py-2">
-                        <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-150">
+                        <!-- <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-150">
                             <i class="fas fa-user-circle mr-3 text-gray-400"></i>
                             View Profile
                         </a>
@@ -73,7 +73,7 @@
                         <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-150">
                             <i class="fas fa-cog mr-3 text-gray-400"></i>
                             Account Settings
-                        </a>
+                        </a> -->
                         
                         @if(Auth::user()->user_type === 'admin')
                         <a href="{{ route('admin.dashboard') }}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-150">
@@ -87,12 +87,12 @@
                         </a>
                         @endif
                         
-                        <div class="border-t border-gray-100 my-2"></div>
+                        <!-- <div class="border-t border-gray-100 my-2"></div>
                         
                         <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-150">
                             <i class="fas fa-question-circle mr-3 text-gray-400"></i>
                             Help & Support
-                        </a>
+                        </a> -->
                         
                         <form method="POST" action="{{ route('logout') }}" class="w-full">
                             @csrf
