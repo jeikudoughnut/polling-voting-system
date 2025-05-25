@@ -1,27 +1,27 @@
 {{-- resources/views/pages/user/components/results.blade.php --}}
 <div class="w-full min-h-screen pt-8 pb-12 px-6">
     <div class="w-full">
-        <h1 class="text-5xl font-extrabold text-gray-800 mb-8 text-center tracking-tight drop-shadow-sm">
+        <h1 class="text-4xl font-bold text-gray-800 mb-8 text-center tracking-tight">
             Poll Results
         </h1>
-        <div class="max-w-6xl mx-auto flex flex-col gap-10">
-            <div class="flex flex-col md:flex-row gap-10">
+        <div class="max-w-7xl mx-auto flex flex-col gap-8">
+            <div class="flex flex-col xl:flex-row gap-8">
                 <!-- Poll Participation Table -->
-                <div class="flex-1 bg-white/95 rounded-3xl shadow-xl border border-gray-100/50 p-8 backdrop-blur-sm">
-                    <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
-                        <svg class="w-6 h-6 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <div class="flex-1 bg-white/95 rounded-2xl shadow-xl border border-gray-100 p-6 backdrop-blur-sm">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                        <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
                         </svg>
-                        <a href="?page=polls" class="hover:text-blue-700 transition-colors duration-200">Poll History</a>
+                        Poll History
                     </h2>
                     <div class="overflow-x-auto rounded-xl border border-gray-100 shadow-inner">
                         <table class="min-w-full text-left">
                             <thead>
                                 <tr class="bg-gradient-to-r from-blue-50 to-indigo-50">
-                                    <th class="px-6 py-4 text-lg font-semibold text-blue-700">Title</th>
-                                    <th class="px-6 py-4 text-lg font-semibold text-blue-700">Date Participated</th>
-                                    <th class="px-6 py-4 text-lg font-semibold text-blue-700">Status</th>
-                                    <th class="px-6 py-4 text-lg font-semibold text-blue-700">Vote</th>
+                                    <th class="px-4 py-3 text-sm font-semibold text-blue-700">Title</th>
+                                    <th class="px-4 py-3 text-sm font-semibold text-blue-700">Date Participated</th>
+                                    <th class="px-4 py-3 text-sm font-semibold text-blue-700">Status</th>
+                                    <th class="px-4 py-3 text-sm font-semibold text-blue-700">Your Vote</th>
                                 </tr>
                             </thead>
                             <tbody id="pollHistoryTableBody" class="divide-y divide-gray-100">
@@ -30,33 +30,34 @@
                         </table>
                     </div>
                 </div>
-                <!-- Poll Result Details (Horizontal Layout) -->
-                <div id="pollDetailsSection" class="flex-1 bg-white/95 rounded-3xl shadow-xl border border-gray-100/50 p-8 flex flex-col justify-center backdrop-blur-sm">
+                <!-- Poll Result Details -->
+                <div id="pollDetailsSection" class="flex-1 bg-white/95 rounded-2xl shadow-xl border border-gray-100 p-6 flex flex-col justify-center backdrop-blur-sm min-h-[400px]">
                     <div class="text-center text-gray-500">
-                        <i class="fas fa-chart-pie text-4xl mb-4"></i>
-                        <p class="text-lg">Select a poll from the table to view detailed results</p>
+                        <i class="fas fa-chart-pie text-3xl mb-3 text-gray-300"></i>
+                        <p class="text-base font-medium text-gray-600">Select a poll from the table to view detailed results</p>
+                        <p class="text-sm text-gray-500 mt-1">Click on any poll row to see the voting breakdown</p>
                     </div>
                 </div>
             </div>
             <!-- Poll Options Bar Chart -->
-            <div id="barChartSection" class="bg-white/95 rounded-3xl shadow-xl border border-gray-100/50 p-8 backdrop-blur-sm" style="display: none;">
-                <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
-                    <svg class="w-6 h-6 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <div id="barChartSection" class="bg-white/95 rounded-2xl shadow-xl border border-gray-100 p-6 backdrop-blur-sm" style="display: none;">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                    <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                     </svg>
                     Vote Distribution
                 </h2>
-                <div id="barChartContent" class="space-y-6 max-w-4xl mx-auto">
+                <div id="barChartContent" class="space-y-4 max-w-4xl mx-auto">
                     <!-- Dynamic bar chart content will be loaded here -->
                 </div>
-                <div class="flex justify-end gap-4 mt-10">
-                    <button id="exportCSVBtn" class="bg-gray-100 hover:bg-gray-200 px-6 py-2.5 rounded-lg text-sm font-medium text-gray-700 transition-colors duration-200 flex items-center shadow-sm hover:shadow">
+                <div class="flex justify-end gap-3 mt-6 pt-4 border-t border-gray-100">
+                    <button id="exportCSVBtn" class="inline-flex items-center px-4 py-2 bg-gray-50 hover:bg-gray-100 text-gray-700 rounded-lg text-sm font-medium transition-colors duration-200 shadow-sm hover:shadow">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
                         </svg>
                         Export CSV
                     </button>
-                    <button id="exportPDFBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg text-sm font-medium transition-colors duration-200 flex items-center shadow-sm hover:shadow">
+                    <button id="exportPDFBtn" class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors duration-200 shadow-sm hover:shadow">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
                         </svg>
@@ -138,8 +139,9 @@ function renderPollHistory() {
             <tr>
                 <td colspan="4" class="px-6 py-8 text-center text-gray-500">
                     <div class="flex flex-col items-center">
-                        <i class="fas fa-inbox text-4xl text-gray-300 mb-4"></i>
-                        <p class="text-lg font-medium">You haven't voted on any polls yet</p>
+                        <i class="fas fa-inbox text-3xl text-gray-300 mb-3"></i>
+                        <p class="text-base font-medium text-gray-600">You haven't voted on any polls yet</p>
+                        <p class="text-sm text-gray-500 mt-1">Start participating in polls to see your results here</p>
                     </div>
                 </td>
             </tr>
@@ -148,20 +150,20 @@ function renderPollHistory() {
     }
 
     tbody.innerHTML = userPolls.map(poll => {
-        const statusClass = poll.status === 'active' ? 'bg-green-100 text-green-700' : 'bg-gray-200 text-gray-700';
+        const statusClass = poll.status === 'active' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600';
         const statusIcon = poll.status === 'active' ? 'text-green-500' : 'text-gray-400';
         
         return `
             <tr class="hover:bg-blue-50/60 transition cursor-pointer" onclick="loadPollResults(${poll.id})">
-                <td class="px-6 py-5 text-lg text-gray-800 font-medium">${poll.title}</td>
-                <td class="px-6 py-5 text-gray-600">${poll.vote_date || 'N/A'}</td>
-                <td class="px-6 py-5">
-                    <span class="inline-flex items-center px-4 py-2 rounded-full ${statusClass} text-base font-semibold shadow-sm">
-                        <svg class="w-4 h-4 mr-2 ${statusIcon}" fill="currentColor" viewBox="0 0 20 20"><circle cx="10" cy="10" r="10"/></svg>
+                <td class="px-4 py-4 text-sm text-gray-800 font-medium">${poll.title}</td>
+                <td class="px-4 py-4 text-sm text-gray-600">${poll.vote_date || 'N/A'}</td>
+                <td class="px-4 py-4">
+                    <span class="inline-flex items-center px-3 py-1 rounded-full ${statusClass} text-xs font-medium">
+                        <svg class="w-3 h-3 mr-1 ${statusIcon}" fill="currentColor" viewBox="0 0 20 20"><circle cx="10" cy="10" r="10"/></svg>
                         ${poll.status.charAt(0).toUpperCase() + poll.status.slice(1)}
                     </span>
                 </td>
-                <td class="px-6 py-5 text-blue-600 font-medium">${poll.user_choice || '-'}</td>
+                <td class="px-4 py-4 text-sm text-blue-600 font-medium">${poll.user_choice || '-'}</td>
             </tr>
         `;
     }).join('');
@@ -195,34 +197,34 @@ function renderPollDetails() {
     const pollDetailsSection = document.getElementById('pollDetailsSection');
     
     pollDetailsSection.innerHTML = `
-        <div class="flex flex-col md:flex-row items-center md:items-start gap-8">
+        <div class="flex flex-col lg:flex-row items-center lg:items-start gap-6">
             <!-- Left: Question and Options -->
             <div class="flex-1">
-                <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
-                    <svg class="w-6 h-6 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <h2 class="text-lg font-semibold text-gray-800 mb-3 flex items-center">
+                    <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
                     ${question.question}
                 </h2>
-                <ul class="mb-4 text-lg text-gray-700 space-y-2">
+                <ul class="mb-4 text-sm text-gray-700 space-y-2">
                     ${question.options.map((option, index) => {
                         const isUserChoice = option.text === question.user_choice;
-                        const userChoiceTag = isUserChoice ? '<span class="ml-2 text-xs text-blue-600 bg-blue-50 px-2 py-1 rounded-full">(your choice)</span>' : '';
+                        const userChoiceTag = isUserChoice ? '<span class="ml-2 text-xs text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full font-medium">(your choice)</span>' : '';
                         
                         return `
                             <li class="flex items-center ${isUserChoice ? 'font-medium' : ''}">
-                                <span class="w-3 h-3 rounded-full mr-2" style="background-color: ${colors[index] || '#6b7280'}"></span>
-                                ${option.text} ${userChoiceTag}
+                                <span class="w-3 h-3 rounded-full mr-2 flex-shrink-0" style="background-color: ${colors[index] || '#6b7280'}"></span>
+                                <span class="flex-1">${option.text} ${userChoiceTag}</span>
                             </li>
                         `;
                     }).join('')}
                 </ul>
-                <div class="text-lg font-semibold text-gray-800 mt-4 p-3 bg-blue-50 rounded-lg inline-block">
-                    Winning option: <span class="text-blue-600">${question.winning_option || 'N/A'}</span>
+                <div class="text-sm font-medium text-gray-800 mt-4 p-3 bg-blue-50 rounded-lg inline-block">
+                    <span class="text-gray-600">Winning option:</span> <span class="text-blue-600">${question.winning_option || 'N/A'}</span>
                 </div>
             </div>
             <!-- Right: Pie Chart -->
-            <div class="flex-shrink-0 w-56 h-56 flex items-center justify-center bg-white/80 rounded-full shadow-inner p-2">
+            <div class="flex-shrink-0 w-48 h-48 flex items-center justify-center bg-white/80 rounded-full shadow-inner p-2">
                 <canvas id="pieChart"></canvas>
             </div>
         </div>
@@ -291,13 +293,13 @@ function renderBarChart() {
     barChartContent.innerHTML = question.options.map((option, index) => `
         <div>
             <div class="flex justify-between text-gray-700 mb-2">
-                <span class="font-medium">${option.text}</span>
-                <span>${option.percentage}%</span>
+                <span class="font-medium text-sm">${option.text}</span>
+                <span class="text-sm font-medium">${option.percentage}%</span>
             </div>
-            <div class="h-8 bg-gray-100 rounded-lg relative overflow-hidden shadow-inner">
-                <div class="h-8 rounded-lg flex items-center justify-end pr-3 transition-all duration-1000" 
+            <div class="h-6 bg-gray-100 rounded-lg relative overflow-hidden shadow-inner">
+                <div class="h-6 rounded-lg flex items-center justify-end pr-2 transition-all duration-1000" 
                      style="width: ${option.percentage}%; background-color: ${colors[index] || '#6b7280'}">
-                    <span class="text-sm text-white font-medium">${option.votes}</span>
+                    <span class="text-xs text-white font-medium">${option.votes}</span>
                 </div>
             </div>
         </div>

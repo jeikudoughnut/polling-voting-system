@@ -1,8 +1,8 @@
 <div class="flex justify-between items-center p-4 bg-gradient-to-r from-white to-gray-50 shadow-lg border-b border-gray-200">
     <div class="flex items-center space-x-4">
-        <button class="p-2 rounded-lg hover:bg-blue-50 transition-all duration-200">
+        <!-- <button class="p-2 rounded-lg hover:bg-blue-50 transition-all duration-200">
             <i class="fas fa-bars text-xl text-gray-700 hover:text-blue-600"></i>
-        </button>
+        </button> -->
         <span class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
             Online Polling and Voting System
         </span>

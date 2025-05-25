@@ -48,6 +48,13 @@ Route::middleware('auth')->group(function () {
             Route::patch('polls/{poll}/status', [PollController::class, 'updateStatus'])->name('polls.status');
             Route::get('polls-data', [PollController::class, 'getPollsByStatus'])->name('polls.data');
             Route::get('dashboard-data', [PollController::class, 'adminDashboard'])->name('dashboard.data');
+            
+            // User management routes
+            Route::get('users', [UserController::class, 'getUsers'])->name('users.index');
+            Route::post('users', [UserController::class, 'createUser'])->name('users.store');
+            Route::put('users/{user}', [UserController::class, 'updateUser'])->name('users.update');
+            Route::delete('users/{user}', [UserController::class, 'deleteUser'])->name('users.destroy');
+            Route::get('users/stats', [UserController::class, 'getUserStats'])->name('users.stats');
         });
     });
 

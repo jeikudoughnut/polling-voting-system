@@ -57,8 +57,8 @@
                 <!-- Create New Poll Button -->
                 <div class="mb-6 text-center">
                     <button onclick="openCreatePollModal()" 
-                        class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-2xl hover:from-blue-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-200 shadow-xl hover:shadow-2xl">
-                        <i class="fas fa-plus mr-3 text-lg"></i>
+                        class="inline-flex items-center px-6 py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-lg hover:from-blue-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl text-sm">
+                        <i class="fas fa-plus mr-2 text-sm"></i>
                         Create New Poll
                     </button>
                 </div>
@@ -115,17 +115,17 @@
                                             @endif
                                         </td>
                                         <td class="px-6 py-5">
-                                            <div class="flex flex-wrap gap-3">
-                                                <a href="{{ route('admin.polls.show', $poll) }}" class="inline-flex items-center px-4 py-2 rounded-full bg-blue-50 text-blue-700 hover:bg-blue-100 font-medium transition">
-                                                    <i class="fas fa-eye mr-2"></i> View
+                                            <div class="flex flex-wrap gap-2">
+                                                <a href="{{ route('admin.polls.show', $poll) }}" class="inline-flex items-center px-3 py-1.5 rounded-lg bg-blue-50 text-blue-700 hover:bg-blue-100 font-medium transition text-sm">
+                                                    <i class="fas fa-eye mr-1.5 text-xs"></i> View
                                                 </a>
                                                 @if($poll->status === 'active')
                                                     <form action="{{ route('admin.polls.status', $poll) }}" method="POST" class="inline">
                                                         @csrf
                                                         @method('PATCH')
                                                         <input type="hidden" name="status" value="closed">
-                                                        <button type="submit" class="inline-flex items-center px-4 py-2 rounded-full bg-yellow-50 text-yellow-700 hover:bg-yellow-100 font-medium transition">
-                                                            <i class="fas fa-stop mr-2"></i> Close
+                                                        <button type="submit" class="inline-flex items-center px-3 py-1.5 rounded-lg bg-yellow-50 text-yellow-700 hover:bg-yellow-100 font-medium transition text-sm">
+                                                            <i class="fas fa-stop mr-1.5 text-xs"></i> Close
                                                         </button>
                                                     </form>
                                                 @elseif($poll->status === 'pending')
@@ -133,16 +133,16 @@
                                                         @csrf
                                                         @method('PATCH')
                                                         <input type="hidden" name="status" value="active">
-                                                        <button type="submit" class="inline-flex items-center px-4 py-2 rounded-full bg-green-50 text-green-700 hover:bg-green-100 font-medium transition">
-                                                            <i class="fas fa-check mr-2"></i> Approve
+                                                        <button type="submit" class="inline-flex items-center px-3 py-1.5 rounded-lg bg-green-50 text-green-700 hover:bg-green-100 font-medium transition text-sm">
+                                                            <i class="fas fa-check mr-1.5 text-xs"></i> Approve
                                                         </button>
                                                     </form>
                                                 @endif
                                                 <form action="{{ route('admin.polls.destroy', $poll) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete this poll?')">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="inline-flex items-center px-4 py-2 rounded-full bg-red-50 text-red-700 hover:bg-red-100 font-medium transition">
-                                                        <i class="fas fa-trash mr-2"></i> Delete
+                                                    <button type="submit" class="inline-flex items-center px-3 py-1.5 rounded-lg bg-red-50 text-red-700 hover:bg-red-100 font-medium transition text-sm">
+                                                        <i class="fas fa-trash mr-1.5 text-xs"></i> Delete
                                                     </button>
                                                 </form>
                                             </div>
@@ -196,21 +196,21 @@
                                             @endif
                                         </td>
                                         <td class="px-6 py-5">
-                                            <div class="flex flex-wrap gap-3">
+                                            <div class="flex flex-wrap gap-2">
                                                 <form action="{{ route('admin.polls.status', $poll) }}" method="POST" class="inline">
                                                     @csrf
                                                     @method('PATCH')
                                                     <input type="hidden" name="status" value="active">
-                                                    <button type="submit" class="inline-flex items-center px-4 py-2 rounded-full bg-green-50 text-green-700 hover:bg-green-100 font-medium transition">
-                                                        <i class="fas fa-check mr-2"></i> Approve
+                                                    <button type="submit" class="inline-flex items-center px-3 py-1.5 rounded-lg bg-green-50 text-green-700 hover:bg-green-100 font-medium transition text-sm">
+                                                        <i class="fas fa-check mr-1.5 text-xs"></i> Approve
                                                     </button>
                                                 </form>
                                                 <form action="{{ route('admin.polls.status', $poll) }}" method="POST" class="inline">
                                                     @csrf
                                                     @method('PATCH')
                                                     <input type="hidden" name="status" value="closed">
-                                                    <button type="submit" class="inline-flex items-center px-4 py-2 rounded-full bg-red-50 text-red-700 hover:bg-red-100 font-medium transition">
-                                                        <i class="fas fa-times mr-2"></i> Reject
+                                                    <button type="submit" class="inline-flex items-center px-3 py-1.5 rounded-lg bg-red-50 text-red-700 hover:bg-red-100 font-medium transition text-sm">
+                                                        <i class="fas fa-times mr-1.5 text-xs"></i> Reject
                                                     </button>
                                                 </form>
                                             </div>
@@ -320,9 +320,8 @@
                                                value="{{ $option }}">
                                         <button type="button" 
                                                 onclick="removeOption(this)" 
-                                                class="px-3 py-3 bg-red-100 text-red-600 rounded-xl hover:bg-red-200 transition-colors {{ $index < 2 ? 'opacity-50 cursor-not-allowed' : '' }}"
-                                                {{ $index < 2 ? 'disabled' : '' }}>
-                                            <i class="fas fa-trash"></i>
+                                                class="px-2.5 py-2.5 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors">
+                                            <i class="fas fa-trash text-xs"></i>
                                         </button>
                                     </div>
                                 @endforeach
@@ -335,9 +334,8 @@
                                            placeholder="Option 1">
                                     <button type="button" 
                                             onclick="removeOption(this)" 
-                                            class="px-3 py-3 bg-red-100 text-red-600 rounded-xl hover:bg-red-200 transition-colors opacity-50 cursor-not-allowed"
-                                            disabled>
-                                        <i class="fas fa-trash"></i>
+                                            class="px-2.5 py-2.5 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors">
+                                        <i class="fas fa-trash text-xs"></i>
                                     </button>
                                 </div>
                                 <div class="option-group mb-3 flex items-center gap-3">
@@ -348,9 +346,8 @@
                                            placeholder="Option 2">
                                     <button type="button" 
                                             onclick="removeOption(this)" 
-                                            class="px-3 py-3 bg-red-100 text-red-600 rounded-xl hover:bg-red-200 transition-colors opacity-50 cursor-not-allowed"
-                                            disabled>
-                                        <i class="fas fa-trash"></i>
+                                            class="px-2.5 py-2.5 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors">
+                                        <i class="fas fa-trash text-xs"></i>
                                     </button>
                                 </div>
                             @endif
@@ -359,8 +356,8 @@
                         <!-- Add Option Button -->
                         <button type="button" 
                                 onclick="addOption()" 
-                                class="mt-3 inline-flex items-center px-4 py-2 bg-green-100 text-green-700 rounded-xl hover:bg-green-200 transition-colors font-medium">
-                            <i class="fas fa-plus mr-2"></i>
+                                class="mt-3 inline-flex items-center px-4 py-2 bg-green-50 text-green-700 rounded-lg hover:bg-green-100 transition-colors font-medium text-sm">
+                            <i class="fas fa-plus mr-2 text-xs"></i>
                             Add Option
                         </button>
                         
@@ -416,14 +413,14 @@
                     </div>
 
                     <!-- Submit Buttons -->
-                    <div class="flex gap-4 justify-end pt-6 border-t border-gray-200">
+                    <div class="flex gap-3 justify-end pt-6 border-t border-gray-200">
                         <button type="button" 
                                 onclick="closeCreatePollModal()"
-                                class="px-6 py-3 bg-gray-200 text-gray-700 rounded-xl hover:bg-gray-300 transition-colors font-medium">
+                                class="px-5 py-2.5 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors font-medium text-sm">
                             Cancel
                         </button>
                         <button type="submit"
-                                class="px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all font-medium shadow-lg">
+                                class="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all font-medium shadow-lg text-sm">
                             <span class="submit-text">Create Poll</span>
                             <span class="loading-text hidden">
                                 <i class="fas fa-spinner fa-spin mr-2"></i>
@@ -477,9 +474,9 @@ function resetForm() {
                    placeholder="Option 1">
             <button type="button" 
                     onclick="removeOption(this)" 
-                    class="px-3 py-3 bg-red-100 text-red-600 rounded-xl hover:bg-red-200 transition-colors"
+                    class="px-2.5 py-2.5 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors"
                     disabled>
-                <i class="fas fa-trash"></i>
+                <i class="fas fa-trash text-xs"></i>
             </button>
         </div>
         <div class="option-group mb-3 flex items-center gap-3">
@@ -490,9 +487,9 @@ function resetForm() {
                    placeholder="Option 2">
             <button type="button" 
                     onclick="removeOption(this)" 
-                    class="px-3 py-3 bg-red-100 text-red-600 rounded-xl hover:bg-red-200 transition-colors"
+                    class="px-2.5 py-2.5 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors"
                     disabled>
-                <i class="fas fa-trash"></i>
+                <i class="fas fa-trash text-xs"></i>
             </button>
         </div>
     `;
@@ -515,8 +512,8 @@ function addOption() {
                placeholder="Option ${optionCount}">
         <button type="button" 
                 onclick="removeOption(this)" 
-                class="px-3 py-3 bg-red-100 text-red-600 rounded-xl hover:bg-red-200 transition-colors">
-            <i class="fas fa-trash"></i>
+                class="px-2.5 py-2.5 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors">
+            <i class="fas fa-trash text-xs"></i>
         </button>
     `;
     container.appendChild(newOption);
@@ -539,8 +536,10 @@ function updateRemoveButtons() {
         button.disabled = hasMinimum;
         if (hasMinimum) {
             button.classList.add('opacity-50', 'cursor-not-allowed');
+            button.classList.remove('hover:bg-red-100');
         } else {
             button.classList.remove('opacity-50', 'cursor-not-allowed');
+            button.classList.add('hover:bg-red-100');
         }
     });
 }
