@@ -582,8 +582,8 @@ async function submitVote() {
 
 // View poll results (placeholder)
 function viewPollResults(pollId) {
-    // This would open a results modal or navigate to a results page
-    showMessage('success', 'Results view coming soon!');
+    // Navigate to results page and load the specific poll
+    window.location.href = `?page=results&poll=${pollId}`;
 }
 
 // Close modal when clicking outside

@@ -614,4 +614,216 @@ class PollController extends Controller
             'recentVotes' => $recentVotes,
         ]);
     }
+
+    /**
+     * Get user's poll participation results
+     */
+    public function getUserResults()
+    {
+        $userId = Auth::id();
+        
+        // Get polls where user has voted
+        $votedPolls = Poll::whereHas('votes', function ($query) use ($userId) {
+            $query->where('user_id', $userId);
+        })
+        ->with(['votes' => function ($query) use ($userId) {
+            $query->where('user_id', $userId);
+        }, 'votes.option', 'questions.options'])
+        ->orderBy('creation_date', 'desc')
+        ->get();
+
+        $results = $votedPolls->map(function ($poll) use ($userId) {
+            $userVote = $poll->votes->first();
+            return [
+                'id' => $poll->id,
+                'title' => $poll->poll_title,
+                'status' => $poll->status,
+                'vote_date' => $userVote ? $userVote->vote_date->format('m/d/Y') : null,
+                'user_choice' => $userVote ? $userVote->option->option_text : null,
+            ];
+        });
+
+        return response()->json([
+            'success' => true,
+            'polls' => $results,
+        ]);
+    }
+
+    /**
+     * Get detailed results for a specific poll
+     */
+    public function getPollResults(Poll $poll)
+    {
+        $userId = Auth::id();
+        
+        // Check if user has voted on this poll or if it's their poll
+        $userVoted = $poll->votes()->where('user_id', $userId)->exists();
+        $isOwner = $poll->creator_user_id == $userId;
+        
+        if (!$userVoted && !$isOwner && $poll->status == 'active') {
+            return response()->json([
+                'success' => false,
+                'message' => 'You need to vote first to see results.',
+            ], 403);
+        }
+
+        $poll->load(['questions.options.votes', 'votes.user', 'votes.option']);
+        
+        $results = [];
+        foreach ($poll->questions as $question) {
+            $totalVotes = $question->votes->count();
+            $options = [];
+            $winningOption = null;
+            $maxVotes = 0;
+
+            foreach ($question->options as $option) {
+                $voteCount = $option->votes->count();
+                $percentage = $totalVotes > 0 ? round(($voteCount / $totalVotes) * 100, 1) : 0;
+                
+                $options[] = [
+                    'id' => $option->id,
+                    'text' => $option->option_text,
+                    'votes' => $voteCount,
+                    'percentage' => $percentage,
+                ];
+
+                if ($voteCount > $maxVotes) {
+                    $maxVotes = $voteCount;
+                    $winningOption = $option->option_text;
+                }
+            }
+
+            // Get user's choice for this question
+            $userChoice = null;
+            if ($userVoted) {
+                $userVote = $poll->votes()->where('user_id', $userId)
+                    ->where('question_id', $question->id)
+                    ->with('option')
+                    ->first();
+                $userChoice = $userVote ? $userVote->option->option_text : null;
+            }
+
+            $results[] = [
+                'question' => $question->question_text,
+                'options' => $options,
+                'total_votes' => $totalVotes,
+                'winning_option' => $winningOption,
+                'user_choice' => $userChoice,
+            ];
+        }
+
+        return response()->json([
+            'success' => true,
+            'poll' => [
+                'id' => $poll->id,
+                'title' => $poll->poll_title,
+                'description' => $poll->poll_description,
+                'status' => $poll->status,
+                'creation_date' => $poll->formatted_creation_date,
+                'total_votes' => $poll->votes->count(),
+                'results' => $results,
+            ],
+        ]);
+    }
+
+    /**
+     * Export poll results as CSV
+     */
+    public function exportCSV(Poll $poll)
+    {
+        $userId = Auth::id();
+        
+        // Check permissions
+        $userVoted = $poll->votes()->where('user_id', $userId)->exists();
+        $isOwner = $poll->creator_user_id == $userId;
+        
+        if (!$userVoted && !$isOwner) {
+            return response()->json([
+                'success' => false,
+                'message' => 'You need to vote first to export results.',
+            ], 403);
+        }
+
+        $poll->load(['questions.options.votes.user']);
+        
+        $filename = 'poll_results_' . $poll->id . '_' . date('Y-m-d') . '.csv';
+        
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+        ];
+
+        $callback = function() use ($poll) {
+            $file = fopen('php://output', 'w');
+            
+            // Add CSV headers
+            fputcsv($file, ['Poll Title', 'Question', 'Option', 'Votes', 'Percentage', 'Voter Name', 'Vote Date']);
+            
+            foreach ($poll->questions as $question) {
+                $totalVotes = $question->votes->count();
+                
+                foreach ($question->options as $option) {
+                    $voteCount = $option->votes->count();
+                    $percentage = $totalVotes > 0 ? round(($voteCount / $totalVotes) * 100, 1) : 0;
+                    
+                    if ($option->votes->count() > 0) {
+                        foreach ($option->votes as $vote) {
+                            fputcsv($file, [
+                                $poll->poll_title,
+                                $question->question_text,
+                                $option->option_text,
+                                $voteCount,
+                                $percentage . '%',
+                                $vote->user->name ?? 'Anonymous',
+                                $vote->vote_date->format('Y-m-d H:i:s'),
+                            ]);
+                        }
+                    } else {
+                        fputcsv($file, [
+                            $poll->poll_title,
+                            $question->question_text,
+                            $option->option_text,
+                            0,
+                            '0%',
+                            '',
+                            '',
+                        ]);
+                    }
+                }
+            }
+            
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
+
+    /**
+     * Export poll results as PDF
+     */
+    public function exportPDF(Poll $poll)
+    {
+        $userId = Auth::id();
+        
+        // Check permissions
+        $userVoted = $poll->votes()->where('user_id', $userId)->exists();
+        $isOwner = $poll->creator_user_id == $userId;
+        
+        if (!$userVoted && !$isOwner) {
+            return response()->json([
+                'success' => false,
+                'message' => 'You need to vote first to export results.',
+            ], 403);
+        }
+
+        // For now, return a simple HTML-to-PDF conversion
+        // In a real application, you might want to use a library like DomPDF or wkhtmltopdf
+        $poll->load(['questions.options.votes']);
+        
+        $html = view('exports.poll-results-pdf', compact('poll'))->render();
+        
+        return response($html)
+            ->header('Content-Type', 'text/html')
+            ->header('Content-Disposition', 'attachment; filename="poll_results_' . $poll->id . '.html"');
+    }
 } 
