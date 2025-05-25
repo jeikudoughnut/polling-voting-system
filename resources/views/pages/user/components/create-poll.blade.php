@@ -1,12 +1,12 @@
 <div class="w-full min-h-screen pt-8 pb-12 px-6">
     <div class="w-full">
-        <h1 class="text-5xl font-extrabold text-gray-800 mb-6 text-center tracking-tight drop-shadow-sm">
+        <h1 class="text-5xl font-extrabold text-gray-800 dark:text-dark-100 mb-6 text-center tracking-tight drop-shadow-sm transition-colors duration-300">
             Create Poll
         </h1>
 
         <!-- Success/Error Messages -->
         <div id="messageContainer" class="max-w-4xl mx-auto mb-6 hidden">
-            <div id="messageAlert" class="px-4 py-3 rounded-xl relative" role="alert">
+            <div id="messageAlert" class="px-4 py-3 rounded-xl relative transition-colors duration-300" role="alert">
                 <strong class="font-bold" id="messageType"></strong>
                 <span class="block sm:inline" id="messageText"></span>
                 <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
@@ -19,58 +19,58 @@
         </div>
 
         <div class="max-w-4xl mx-auto">
-            <div class="bg-white/95 rounded-2xl shadow-2xl border border-gray-100 p-8 relative overflow-hidden">
+            <div class="bg-white/95 dark:bg-dark-800/95 rounded-2xl shadow-2xl border border-gray-100 dark:border-dark-700 p-8 relative overflow-hidden transition-colors duration-300">
                 <!-- Decorative Circles -->
-                <div class="absolute -top-8 -left-8 w-32 h-32 bg-blue-100 rounded-full opacity-20 blur-2xl"></div>
-                <div class="absolute -bottom-8 -right-8 w-32 h-32 bg-yellow-100 rounded-full opacity-20 blur-2xl"></div>
+                <div class="absolute -top-8 -left-8 w-32 h-32 bg-blue-100 dark:bg-blue-900/30 rounded-full opacity-20 blur-2xl"></div>
+                <div class="absolute -bottom-8 -right-8 w-32 h-32 bg-yellow-100 dark:bg-yellow-900/30 rounded-full opacity-20 blur-2xl"></div>
                 
                 <form id="createPollForm" method="POST">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     
                     <!-- Poll Title -->
                     <div class="mb-8">
-                        <label for="pollTitle" class="block text-xl md:text-2xl font-bold text-gray-800 mb-3">
+                        <label for="pollTitle" class="block text-xl md:text-2xl font-bold text-gray-800 dark:text-dark-100 mb-3 transition-colors duration-300">
                             Poll Title *
                         </label>
                         <input type="text" 
                                id="pollTitle" 
                                name="poll_title" 
                                required
-                               class="w-full px-5 py-3 rounded-lg border-2 border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg bg-gray-50 placeholder-gray-400 transition-all"
+                               class="w-full px-5 py-3 rounded-lg border-2 border-gray-200 dark:border-dark-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg bg-gray-50 dark:bg-dark-700 placeholder-gray-400 dark:placeholder-dark-400 text-gray-900 dark:text-dark-100 transition-all duration-300"
                                placeholder="Enter your poll question">
-                        <div class="text-red-500 text-sm mt-1 hidden" id="pollTitleError"></div>
+                        <div class="text-red-500 dark:text-red-400 text-sm mt-1 hidden" id="pollTitleError"></div>
                     </div>
 
                     <!-- Poll Description -->
                     <div class="mb-8">
-                        <label for="pollDescription" class="block text-xl md:text-2xl font-bold text-gray-800 mb-3">
+                        <label for="pollDescription" class="block text-xl md:text-2xl font-bold text-gray-800 dark:text-dark-100 mb-3 transition-colors duration-300">
                             Description (Optional)
                         </label>
                         <textarea id="pollDescription" 
                                   name="poll_description" 
                                   rows="3"
-                                  class="w-full px-5 py-3 rounded-lg border-2 border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg bg-gray-50 placeholder-gray-400 transition-all resize-none"
+                                  class="w-full px-5 py-3 rounded-lg border-2 border-gray-200 dark:border-dark-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg bg-gray-50 dark:bg-dark-700 placeholder-gray-400 dark:placeholder-dark-400 text-gray-900 dark:text-dark-100 transition-all duration-300 resize-none"
                                   placeholder="Provide additional details about your poll"></textarea>
-                        <div class="text-red-500 text-sm mt-1 hidden" id="pollDescriptionError"></div>
+                        <div class="text-red-500 dark:text-red-400 text-sm mt-1 hidden" id="pollDescriptionError"></div>
                     </div>
 
                     <!-- Question Text -->
                     <div class="mb-8">
-                        <label for="questionText" class="block text-xl md:text-2xl font-bold text-gray-800 mb-3">
+                        <label for="questionText" class="block text-xl md:text-2xl font-bold text-gray-800 dark:text-dark-100 mb-3 transition-colors duration-300">
                             Question *
                         </label>
                         <input type="text" 
                                id="questionText" 
                                name="question_text" 
                                required
-                               class="w-full px-5 py-3 rounded-lg border-2 border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg bg-gray-50 placeholder-gray-400 transition-all"
+                               class="w-full px-5 py-3 rounded-lg border-2 border-gray-200 dark:border-dark-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg bg-gray-50 dark:bg-dark-700 placeholder-gray-400 dark:placeholder-dark-400 text-gray-900 dark:text-dark-100 transition-all duration-300"
                                placeholder="What question do you want to ask?">
-                        <div class="text-red-500 text-sm mt-1 hidden" id="questionTextError"></div>
+                        <div class="text-red-500 dark:text-red-400 text-sm mt-1 hidden" id="questionTextError"></div>
                     </div>
 
                     <!-- Options -->
                     <div class="mb-8">
-                        <label class="block text-xl md:text-2xl font-bold text-gray-800 mb-3">
+                        <label class="block text-xl md:text-2xl font-bold text-gray-800 dark:text-dark-100 mb-3 transition-colors duration-300">
                             Answer Options *
                         </label>
                         <div id="optionsContainer">
@@ -79,11 +79,11 @@
                                 <input type="text" 
                                        name="options[]" 
                                        required
-                                       class="flex-1 px-5 py-3 rounded-lg border-2 border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg bg-gray-50 placeholder-gray-400 transition-all"
+                                       class="flex-1 px-5 py-3 rounded-lg border-2 border-gray-200 dark:border-dark-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg bg-gray-50 dark:bg-dark-700 placeholder-gray-400 dark:placeholder-dark-400 text-gray-900 dark:text-dark-100 transition-all duration-300"
                                        placeholder="Option 1">
                                 <button type="button" 
                                         onclick="removeOption(this)" 
-                                        class="px-3 py-3 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition-colors opacity-50 cursor-not-allowed"
+                                        class="px-3 py-3 bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-lg hover:bg-red-200 dark:hover:bg-red-900/50 transition-colors opacity-50 cursor-not-allowed"
                                         disabled>
                                     <i class="fas fa-trash"></i>
                                 </button>
@@ -92,11 +92,11 @@
                                 <input type="text" 
                                        name="options[]" 
                                        required
-                                       class="flex-1 px-5 py-3 rounded-lg border-2 border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg bg-gray-50 placeholder-gray-400 transition-all"
+                                       class="flex-1 px-5 py-3 rounded-lg border-2 border-gray-200 dark:border-dark-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg bg-gray-50 dark:bg-dark-700 placeholder-gray-400 dark:placeholder-dark-400 text-gray-900 dark:text-dark-100 transition-all duration-300"
                                        placeholder="Option 2">
                                 <button type="button" 
                                         onclick="removeOption(this)" 
-                                        class="px-3 py-3 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition-colors opacity-50 cursor-not-allowed"
+                                        class="px-3 py-3 bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-lg hover:bg-red-200 dark:hover:bg-red-900/50 transition-colors opacity-50 cursor-not-allowed"
                                         disabled>
                                     <i class="fas fa-trash"></i>
                                 </button>
@@ -107,75 +107,75 @@
                         <div class="flex items-center gap-2 mt-3">
                             <button type="button" 
                                     onclick="addOption()" 
-                                    class="inline-flex items-center px-4 py-2 rounded-full bg-green-100 text-green-700 hover:bg-green-200 font-medium transition-colors">
+                                    class="inline-flex items-center px-4 py-2 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 hover:bg-green-200 dark:hover:bg-green-900/50 font-medium transition-colors">
                                 <i class="fas fa-plus mr-2"></i> Add option
                             </button>
-                            <span class="text-gray-500 text-sm">Minimum 2 options required, maximum 10</span>
+                            <span class="text-gray-500 dark:text-dark-400 text-sm transition-colors duration-300">Minimum 2 options required, maximum 10</span>
                         </div>
-                        <div class="text-red-500 text-sm mt-1 hidden" id="optionsError"></div>
+                        <div class="text-red-500 dark:text-red-400 text-sm mt-1 hidden" id="optionsError"></div>
                     </div>
 
-                    <hr class="my-8 border-gray-200">
+                    <hr class="my-8 border-gray-200 dark:border-dark-600 transition-colors duration-300">
 
                     <!-- Settings -->
                     <div class="flex flex-col md:flex-row gap-8">
                         <!-- Left: Settings -->
                         <div class="flex-1">
-                            <h2 class="text-lg md:text-xl font-bold text-gray-800 mb-6">Poll Settings</h2>
+                            <h2 class="text-lg md:text-xl font-bold text-gray-800 dark:text-dark-100 mb-6 transition-colors duration-300">Poll Settings</h2>
                             
                             <!-- Multiple Choice -->
-                            <div class="flex items-center justify-between mb-6 p-4 bg-gray-50 rounded-lg">
+                            <div class="flex items-center justify-between mb-6 p-4 bg-gray-50 dark:bg-dark-700 rounded-lg transition-colors duration-300">
                                 <div>
-                                    <span class="text-gray-800 text-base font-medium">Allow multiple selections</span>
-                                    <p class="text-gray-600 text-sm">Let voters choose more than one option</p>
+                                    <span class="text-gray-800 dark:text-dark-100 text-base font-medium transition-colors duration-300">Allow multiple selections</span>
+                                    <p class="text-gray-600 dark:text-dark-300 text-sm transition-colors duration-300">Let voters choose more than one option</p>
                                 </div>
                                 <label class="relative inline-flex items-center cursor-pointer">
                                     <input type="checkbox" name="allow_multiple" value="1" class="sr-only peer">
-                                    <div class="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-2 peer-focus:ring-blue-500 peer-checked:bg-blue-600 transition-all"></div>
+                                    <div class="w-11 h-6 bg-gray-200 dark:bg-dark-600 rounded-full peer peer-focus:ring-2 peer-focus:ring-blue-500 peer-checked:bg-blue-600 transition-all"></div>
                                     <div class="absolute left-1 top-1 w-4 h-4 bg-white rounded-full shadow-md peer-checked:translate-x-5 transition-all"></div>
                                 </label>
                             </div>
 
                             <!-- Schedule Close -->
-                            <div class="flex items-center justify-between mb-4 p-4 bg-gray-50 rounded-lg">
+                            <div class="flex items-center justify-between mb-4 p-4 bg-gray-50 dark:bg-dark-700 rounded-lg transition-colors duration-300">
                                 <div>
-                                    <span class="text-gray-800 text-base font-medium">Schedule poll closure</span>
-                                    <p class="text-gray-600 text-sm">Set when this poll should automatically close</p>
+                                    <span class="text-gray-800 dark:text-dark-100 text-base font-medium transition-colors duration-300">Schedule poll closure</span>
+                                    <p class="text-gray-600 dark:text-dark-300 text-sm transition-colors duration-300">Set when this poll should automatically close</p>
                                 </div>
                                 <label class="relative inline-flex items-center cursor-pointer">
                                     <input type="checkbox" class="sr-only peer" id="scheduleToggle">
-                                    <div class="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-2 peer-focus:ring-blue-500 peer-checked:bg-blue-600 transition-all"></div>
+                                    <div class="w-11 h-6 bg-gray-200 dark:bg-dark-600 rounded-full peer peer-focus:ring-2 peer-focus:ring-blue-500 peer-checked:bg-blue-600 transition-all"></div>
                                     <div class="absolute left-1 top-1 w-4 h-4 bg-white rounded-full shadow-md peer-checked:translate-x-5 transition-all"></div>
                                 </label>
                             </div>
                             
                             <!-- Date/Time Input -->
                             <div class="ml-4 mb-6 hidden" id="datetimeContainer">
-                                <label for="endDate" class="block text-gray-700 font-medium mb-2">End Date & Time</label>
+                                <label for="endDate" class="block text-gray-700 dark:text-dark-200 font-medium mb-2 transition-colors duration-300">End Date & Time</label>
                                 <input type="datetime-local" 
                                        id="endDate" 
                                        name="end_date"
-                                       class="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base bg-gray-50">
-                                <p class="text-gray-500 text-sm mt-1">Leave empty for no expiration</p>
+                                       class="w-full px-4 py-3 rounded-lg border-2 border-gray-200 dark:border-dark-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base bg-gray-50 dark:bg-dark-700 text-gray-900 dark:text-dark-100 transition-all duration-300">
+                                <p class="text-gray-500 dark:text-dark-400 text-sm mt-1 transition-colors duration-300">Leave empty for no expiration</p>
                             </div>
                         </div>
 
                         <!-- Vertical Divider -->
                         <div class="hidden md:flex items-stretch mx-4">
-                            <div class="border-l border-gray-200"></div>
+                            <div class="border-l border-gray-200 dark:border-dark-600 transition-colors duration-300"></div>
                         </div>
 
                         <!-- Right: Status Info and Create button -->
                         <div class="flex-1 flex flex-col justify-between">
                             <!-- Status Information -->
                             <div class="mb-8">
-                                <h3 class="text-lg font-bold text-gray-800 mb-4">Poll Status</h3>
-                                <div class="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                                <h3 class="text-lg font-bold text-gray-800 dark:text-dark-100 mb-4 transition-colors duration-300">Poll Status</h3>
+                                <div class="p-4 bg-yellow-50 dark:bg-yellow-900/30 border border-yellow-200 dark:border-yellow-600 rounded-lg transition-colors duration-300">
                                     <div class="flex items-center mb-2">
-                                        <i class="fas fa-clock text-yellow-600 mr-2"></i>
-                                        <span class="font-medium text-yellow-800">Pending Approval</span>
+                                        <i class="fas fa-clock text-yellow-600 dark:text-yellow-400 mr-2"></i>
+                                        <span class="font-medium text-yellow-800 dark:text-yellow-300 transition-colors duration-300">Pending Approval</span>
                                     </div>
-                                    <p class="text-yellow-700 text-sm">
+                                    <p class="text-yellow-700 dark:text-yellow-300 text-sm transition-colors duration-300">
                                         Your poll will be submitted for admin review. Once approved, it will become active and users can vote on it.
                                     </p>
                                 </div>
@@ -241,9 +241,9 @@ function showMessage(type, message) {
     messageText.textContent = message;
     
     if (type === 'success') {
-        alert.className = 'bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-xl relative';
+        alert.className = 'bg-green-100 dark:bg-green-900/30 border border-green-400 dark:border-green-600 text-green-700 dark:text-green-300 px-4 py-3 rounded-xl relative transition-colors duration-300';
     } else {
-        alert.className = 'bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-xl relative';
+        alert.className = 'bg-red-100 dark:bg-red-900/30 border border-red-400 dark:border-red-600 text-red-700 dark:text-red-300 px-4 py-3 rounded-xl relative transition-colors duration-300';
     }
     
     container.classList.remove('hidden');
@@ -276,11 +276,11 @@ function addOption() {
         <input type="text" 
                name="options[]" 
                required
-               class="flex-1 px-5 py-3 rounded-lg border-2 border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg bg-gray-50 placeholder-gray-400 transition-all"
+               class="flex-1 px-5 py-3 rounded-lg border-2 border-gray-200 dark:border-dark-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg bg-gray-50 dark:bg-dark-700 placeholder-gray-400 dark:placeholder-dark-400 text-gray-900 dark:text-dark-100 transition-all duration-300"
                placeholder="Option ${optionCount}">
         <button type="button" 
                 onclick="removeOption(this)" 
-                class="px-3 py-3 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition-colors">
+                class="px-3 py-3 bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-lg hover:bg-red-200 dark:hover:bg-red-900/50 transition-colors">
             <i class="fas fa-trash"></i>
         </button>
     `;
@@ -489,11 +489,11 @@ function resetForm() {
             <input type="text" 
                    name="options[]" 
                    required
-                   class="flex-1 px-5 py-3 rounded-lg border-2 border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg bg-gray-50 placeholder-gray-400 transition-all"
+                   class="flex-1 px-5 py-3 rounded-lg border-2 border-gray-200 dark:border-dark-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg bg-gray-50 dark:bg-dark-700 placeholder-gray-400 dark:placeholder-dark-400 text-gray-900 dark:text-dark-100 transition-all duration-300"
                    placeholder="Option 1">
             <button type="button" 
                     onclick="removeOption(this)" 
-                    class="px-3 py-3 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition-colors opacity-50 cursor-not-allowed"
+                    class="px-3 py-3 bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-lg hover:bg-red-200 dark:hover:bg-red-900/50 transition-colors opacity-50 cursor-not-allowed"
                     disabled>
                 <i class="fas fa-trash"></i>
             </button>
@@ -502,11 +502,11 @@ function resetForm() {
             <input type="text" 
                    name="options[]" 
                    required
-                   class="flex-1 px-5 py-3 rounded-lg border-2 border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg bg-gray-50 placeholder-gray-400 transition-all"
+                   class="flex-1 px-5 py-3 rounded-lg border-2 border-gray-200 dark:border-dark-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg bg-gray-50 dark:bg-dark-700 placeholder-gray-400 dark:placeholder-dark-400 text-gray-900 dark:text-dark-100 transition-all duration-300"
                    placeholder="Option 2">
             <button type="button" 
                     onclick="removeOption(this)" 
-                    class="px-3 py-3 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition-colors opacity-50 cursor-not-allowed"
+                    class="px-3 py-3 bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-lg hover:bg-red-200 dark:hover:bg-red-900/50 transition-colors opacity-50 cursor-not-allowed"
                     disabled>
                 <i class="fas fa-trash"></i>
             </button>

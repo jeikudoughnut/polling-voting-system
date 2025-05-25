@@ -1,12 +1,12 @@
 <div class="w-full min-h-screen pt-8 pb-12 px-6">
     <div class="w-full">
-        <h1 class="text-5xl font-extrabold text-gray-800 mb-6 text-center tracking-tight drop-shadow-sm">
+        <h1 class="text-5xl font-extrabold text-gray-800 dark:text-dark-100 mb-6 text-center tracking-tight drop-shadow-sm transition-colors duration-300">
             User Management
         </h1>
 
         <!-- Success/Error Messages -->
         <div id="messageContainer" class="max-w-7xl mx-auto mb-6 hidden">
-            <div id="messageAlert" class="px-4 py-3 rounded-xl relative" role="alert">
+            <div id="messageAlert" class="px-4 py-3 rounded-xl relative transition-colors duration-300" role="alert">
                 <strong class="font-bold" id="messageType"></strong>
                 <span class="block sm:inline" id="messageText"></span>
                 <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
@@ -19,15 +19,15 @@
         </div>
 
         <div class="max-w-7xl mx-auto">
-            <div class="relative bg-white/95 rounded-2xl shadow-xl border border-gray-100 p-8 overflow-hidden">
+            <div class="relative bg-white/95 dark:bg-dark-800/95 rounded-2xl shadow-xl border border-gray-100 dark:border-dark-700 p-8 overflow-hidden transition-colors duration-300">
                 <!-- Decorative Circles -->
-                <div class="absolute -top-8 -left-8 w-32 h-32 bg-blue-100 rounded-full opacity-20 blur-2xl"></div>
-                <div class="absolute -bottom-8 -right-8 w-32 h-32 bg-green-100 rounded-full opacity-20 blur-2xl"></div>
+                <div class="absolute -top-8 -left-8 w-32 h-32 bg-blue-100 dark:bg-blue-900/30 rounded-full opacity-20 blur-2xl"></div>
+                <div class="absolute -bottom-8 -right-8 w-32 h-32 bg-green-100 dark:bg-green-900/30 rounded-full opacity-20 blur-2xl"></div>
                 
                 <!-- Header with Stats -->
                 <div class="mb-8">
                     <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
-                        <h2 class="text-3xl font-bold text-gray-700 mb-4 md:mb-0 border-b-2 border-blue-200 inline-block px-4 pb-2">
+                        <h2 class="text-3xl font-bold text-gray-700 dark:text-dark-200 mb-4 md:mb-0 border-b-2 border-blue-200 dark:border-blue-600 inline-block px-4 pb-2 transition-colors duration-300">
                             Users
                         </h2>
                         <button onclick="openCreateUserModal()" class="inline-flex items-center px-5 py-2.5 rounded-lg bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 font-medium transition-all duration-200 shadow-lg hover:shadow-xl text-sm">
@@ -37,47 +37,47 @@
                     
                     <!-- Stats Cards -->
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-                        <div class="bg-gradient-to-r from-blue-50 to-blue-100 p-4 rounded-xl border border-blue-200">
+                        <div class="bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/30 p-4 rounded-xl border border-blue-200 dark:border-blue-700 transition-colors duration-300">
                             <div class="flex items-center">
-                                <div class="p-2 bg-blue-500 rounded-lg">
+                                <div class="p-2 bg-blue-500 dark:bg-blue-600 rounded-lg">
                                     <i class="fas fa-users text-white"></i>
                                 </div>
                                 <div class="ml-3">
-                                    <p class="text-sm text-blue-600 font-medium">Total Users</p>
-                                    <p class="text-2xl font-bold text-blue-800" id="totalUsers">-</p>
+                                    <p class="text-sm text-blue-600 dark:text-blue-300 font-medium">Total Users</p>
+                                    <p class="text-2xl font-bold text-blue-800 dark:text-blue-200" id="totalUsers">-</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="bg-gradient-to-r from-green-50 to-green-100 p-4 rounded-xl border border-green-200">
+                        <div class="bg-gradient-to-r from-green-50 to-green-100 dark:from-green-900/30 dark:to-green-800/30 p-4 rounded-xl border border-green-200 dark:border-green-700 transition-colors duration-300">
                             <div class="flex items-center">
-                                <div class="p-2 bg-green-500 rounded-lg">
+                                <div class="p-2 bg-green-500 dark:bg-green-600 rounded-lg">
                                     <i class="fas fa-user-shield text-white"></i>
                                 </div>
                                 <div class="ml-3">
-                                    <p class="text-sm text-green-600 font-medium">Admins</p>
-                                    <p class="text-2xl font-bold text-green-800" id="adminUsers">-</p>
+                                    <p class="text-sm text-green-600 dark:text-green-300 font-medium">Admins</p>
+                                    <p class="text-2xl font-bold text-green-800 dark:text-green-200" id="adminUsers">-</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="bg-gradient-to-r from-yellow-50 to-yellow-100 p-4 rounded-xl border border-yellow-200">
+                        <div class="bg-gradient-to-r from-yellow-50 to-yellow-100 dark:from-yellow-900/30 dark:to-yellow-800/30 p-4 rounded-xl border border-yellow-200 dark:border-yellow-700 transition-colors duration-300">
                             <div class="flex items-center">
-                                <div class="p-2 bg-yellow-500 rounded-lg">
+                                <div class="p-2 bg-yellow-500 dark:bg-yellow-600 rounded-lg">
                                     <i class="fas fa-user text-white"></i>
                                 </div>
                                 <div class="ml-3">
-                                    <p class="text-sm text-yellow-600 font-medium">Regular Users</p>
-                                    <p class="text-2xl font-bold text-yellow-800" id="regularUsers">-</p>
+                                    <p class="text-sm text-yellow-600 dark:text-yellow-300 font-medium">Regular Users</p>
+                                    <p class="text-2xl font-bold text-yellow-800 dark:text-yellow-200" id="regularUsers">-</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="bg-gradient-to-r from-purple-50 to-purple-100 p-4 rounded-xl border border-purple-200">
+                        <div class="bg-gradient-to-r from-purple-50 to-purple-100 dark:from-purple-900/30 dark:to-purple-800/30 p-4 rounded-xl border border-purple-200 dark:border-purple-700 transition-colors duration-300">
                             <div class="flex items-center">
-                                <div class="p-2 bg-purple-500 rounded-lg">
+                                <div class="p-2 bg-purple-500 dark:bg-purple-600 rounded-lg">
                                     <i class="fas fa-user-plus text-white"></i>
                                 </div>
                                 <div class="ml-3">
-                                    <p class="text-sm text-purple-600 font-medium">New (30 days)</p>
-                                    <p class="text-2xl font-bold text-purple-800" id="recentUsers">-</p>
+                                    <p class="text-sm text-purple-600 dark:text-purple-300 font-medium">New (30 days)</p>
+                                    <p class="text-2xl font-bold text-purple-800 dark:text-purple-200" id="recentUsers">-</p>
                                 </div>
                             </div>
                         </div>
@@ -88,9 +88,9 @@
                 <div class="flex flex-col md:flex-row gap-4 mb-6">
                     <div class="flex-1">
                         <input type="text" id="searchInput" placeholder="Search users by name, email, or username..." 
-                               class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 shadow-sm">
+                               class="w-full px-4 py-3 border border-gray-200 dark:border-dark-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 shadow-sm bg-white dark:bg-dark-700 text-gray-900 dark:text-dark-100 placeholder-gray-400 dark:placeholder-dark-400">
                     </div>
-                    <select id="userTypeFilter" class="px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 shadow-sm">
+                    <select id="userTypeFilter" class="px-4 py-3 border border-gray-200 dark:border-dark-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 shadow-sm bg-white dark:bg-dark-700 text-gray-900 dark:text-dark-100">
                         <option value="all">All User Types</option>
                         <option value="admin">Admins Only</option>
                         <option value="user">Regular Users Only</option>
@@ -98,22 +98,22 @@
                 </div>
 
                 <!-- Users Table -->
-                <div class="overflow-x-auto rounded-xl border border-gray-100 shadow-inner">
+                <div class="overflow-x-auto rounded-xl border border-gray-100 dark:border-dark-600 shadow-inner transition-colors duration-300">
                     <table class="min-w-full text-left">
                         <thead>
-                            <tr class="bg-gradient-to-r from-blue-50 to-green-50">
-                                <th class="px-6 py-4 text-lg font-semibold text-blue-700">User Info</th>
-                                <th class="px-6 py-4 text-lg font-semibold text-blue-700">Email</th>
-                                <th class="px-6 py-4 text-lg font-semibold text-blue-700">Role</th>
-                                <th class="px-6 py-4 text-lg font-semibold text-blue-700">Activity</th>
-                                <th class="px-6 py-4 text-lg font-semibold text-blue-700">Actions</th>
+                            <tr class="bg-gradient-to-r from-blue-50 to-green-50 dark:from-blue-900/30 dark:to-green-900/30">
+                                <th class="px-6 py-4 text-lg font-semibold text-blue-700 dark:text-blue-300">User Info</th>
+                                <th class="px-6 py-4 text-lg font-semibold text-blue-700 dark:text-blue-300">Email</th>
+                                <th class="px-6 py-4 text-lg font-semibold text-blue-700 dark:text-blue-300">Role</th>
+                                <th class="px-6 py-4 text-lg font-semibold text-blue-700 dark:text-blue-300">Activity</th>
+                                <th class="px-6 py-4 text-lg font-semibold text-blue-700 dark:text-blue-300">Actions</th>
                             </tr>
                         </thead>
-                        <tbody id="usersTableBody" class="divide-y divide-gray-100">
+                        <tbody id="usersTableBody" class="divide-y divide-gray-100 dark:divide-dark-600">
                             <tr>
-                                <td colspan="5" class="px-6 py-8 text-center text-gray-500">
+                                <td colspan="5" class="px-6 py-8 text-center text-gray-500 dark:text-dark-400">
                                     <div class="flex flex-col items-center">
-                                        <i class="fas fa-spinner fa-spin text-4xl text-gray-300 mb-4"></i>
+                                        <i class="fas fa-spinner fa-spin text-4xl text-gray-300 dark:text-dark-500 mb-4"></i>
                                         <p class="text-lg font-medium">Loading users...</p>
                                     </div>
                                 </td>
@@ -127,7 +127,7 @@
 
     <!-- Create/Edit User Modal -->
     <div id="userModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto relative">
+        <div class="bg-white dark:bg-dark-800 rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto relative transition-colors duration-300">
             <!-- Modal Header -->
             <div class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-6 rounded-t-3xl">
                 <div class="flex justify-between items-center">
@@ -145,44 +145,44 @@
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <label for="userName" class="block text-sm font-medium text-gray-700 mb-2">Full Name *</label>
+                            <label for="userName" class="block text-sm font-medium text-gray-700 dark:text-dark-200 mb-2 transition-colors duration-300">Full Name *</label>
                             <input type="text" id="userName" name="name" required
-                                   class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200">
+                                   class="w-full px-4 py-3 border border-gray-200 dark:border-dark-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white dark:bg-dark-700 text-gray-900 dark:text-dark-100">
                         </div>
                         
                         <div>
-                            <label for="userUsername" class="block text-sm font-medium text-gray-700 mb-2">Username</label>
+                            <label for="userUsername" class="block text-sm font-medium text-gray-700 dark:text-dark-200 mb-2 transition-colors duration-300">Username</label>
                             <input type="text" id="userUsername" name="username"
-                                   class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200">
+                                   class="w-full px-4 py-3 border border-gray-200 dark:border-dark-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white dark:bg-dark-700 text-gray-900 dark:text-dark-100">
                         </div>
                     </div>
 
                     <div class="mt-6">
-                        <label for="userEmail" class="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
+                        <label for="userEmail" class="block text-sm font-medium text-gray-700 dark:text-dark-200 mb-2 transition-colors duration-300">Email Address *</label>
                         <input type="email" id="userEmail" name="email" required
-                               class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200">
+                               class="w-full px-4 py-3 border border-gray-200 dark:border-dark-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white dark:bg-dark-700 text-gray-900 dark:text-dark-100">
                     </div>
 
                     <div class="mt-6">
-                        <label for="userType" class="block text-sm font-medium text-gray-700 mb-2">User Role *</label>
+                        <label for="userType" class="block text-sm font-medium text-gray-700 dark:text-dark-200 mb-2 transition-colors duration-300">User Role *</label>
                         <select id="userType" name="user_type" required
-                                class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200">
+                                class="w-full px-4 py-3 border border-gray-200 dark:border-dark-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white dark:bg-dark-700 text-gray-900 dark:text-dark-100">
                             <option value="user">Regular User</option>
                             <option value="admin">Administrator</option>
                         </select>
                     </div>
 
                     <div class="mt-6">
-                        <label for="userPassword" class="block text-sm font-medium text-gray-700 mb-2">
+                        <label for="userPassword" class="block text-sm font-medium text-gray-700 dark:text-dark-200 mb-2 transition-colors duration-300">
                             Password <span id="passwordRequired">*</span>
-                            <span id="passwordOptional" class="text-gray-500 text-xs">(leave blank to keep current password)</span>
+                            <span id="passwordOptional" class="text-gray-500 dark:text-dark-400 text-xs">(leave blank to keep current password)</span>
                         </label>
                         <input type="password" id="userPassword" name="password"
-                               class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200">
+                               class="w-full px-4 py-3 border border-gray-200 dark:border-dark-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white dark:bg-dark-700 text-gray-900 dark:text-dark-100">
                     </div>
 
-                    <div class="flex gap-3 justify-end pt-6 border-t border-gray-200 mt-8">
-                        <button onclick="closeUserModal()" class="px-5 py-2.5 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors font-medium text-sm">
+                    <div class="flex gap-3 justify-end pt-6 border-t border-gray-200 dark:border-dark-600 mt-8 transition-colors duration-300">
+                        <button onclick="closeUserModal()" class="px-5 py-2.5 bg-gray-100 dark:bg-dark-600 text-gray-700 dark:text-dark-200 rounded-lg hover:bg-gray-200 dark:hover:bg-dark-500 transition-colors font-medium text-sm">
                             Cancel
                         </button>
                         <button type="submit" class="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all font-medium shadow-lg text-sm">
@@ -196,17 +196,17 @@
 
     <!-- Delete Confirmation Modal -->
     <div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full">
+        <div class="bg-white dark:bg-dark-800 rounded-3xl shadow-2xl max-w-md w-full transition-colors duration-300">
             <div class="p-6">
                 <div class="flex items-center mb-4">
-                    <div class="p-3 bg-red-100 rounded-full">
-                        <i class="fas fa-exclamation-triangle text-red-600 text-xl"></i>
+                    <div class="p-3 bg-red-100 dark:bg-red-900/30 rounded-full">
+                        <i class="fas fa-exclamation-triangle text-red-600 dark:text-red-400 text-xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-800 ml-3">Confirm Deletion</h3>
+                    <h3 class="text-xl font-bold text-gray-800 dark:text-dark-100 ml-3 transition-colors duration-300">Confirm Deletion</h3>
                 </div>
-                <p class="text-gray-600 mb-6">Are you sure you want to delete this user? This action cannot be undone.</p>
+                <p class="text-gray-600 dark:text-dark-300 mb-6 transition-colors duration-300">Are you sure you want to delete this user? This action cannot be undone.</p>
                 <div class="flex gap-3 justify-end">
-                    <button onclick="closeDeleteModal()" class="px-5 py-2.5 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors font-medium text-sm">
+                    <button onclick="closeDeleteModal()" class="px-5 py-2.5 bg-gray-100 dark:bg-dark-600 text-gray-700 dark:text-dark-200 rounded-lg hover:bg-gray-200 dark:hover:bg-dark-500 transition-colors font-medium text-sm">
                         Cancel
                     </button>
                     <button onclick="confirmDeleteUser()" class="px-5 py-2.5 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-medium text-sm">
@@ -294,32 +294,32 @@ function renderUsers() {
     });
     
     tbody.innerHTML = filteredUsers.map(user => `
-        <tr class="hover:bg-blue-50/60 transition">
+        <tr class="hover:bg-blue-50/60 dark:hover:bg-blue-900/20 transition">
             <td class="px-6 py-5">
                 <div>
-                    <div class="text-lg text-gray-800 font-medium">${user.name}</div>
-                    ${user.username ? `<div class="text-sm text-gray-600">@${user.username}</div>` : ''}
-                    <div class="text-xs text-gray-500">Joined ${user.created_at}</div>
+                    <div class="text-lg text-gray-800 dark:text-dark-200 font-medium">${user.name}</div>
+                    ${user.username ? `<div class="text-sm text-gray-600 dark:text-dark-300">@${user.username}</div>` : ''}
+                    <div class="text-xs text-gray-500 dark:text-dark-400">Joined ${user.created_at}</div>
                 </div>
             </td>
-            <td class="px-6 py-5 text-gray-800 font-medium text-lg">${user.email}</td>
+            <td class="px-6 py-5 text-gray-800 dark:text-dark-200 font-medium text-lg">${user.email}</td>
             <td class="px-6 py-5">
-                <span class="inline-flex items-center px-4 py-2 rounded-full ${user.user_type === 'admin' ? 'bg-blue-100 text-blue-700' : 'bg-gray-100 text-gray-700'} text-base font-semibold shadow">
+                <span class="inline-flex items-center px-4 py-2 rounded-full ${user.user_type === 'admin' ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300' : 'bg-gray-100 dark:bg-dark-600 text-gray-700 dark:text-dark-300'} text-base font-semibold shadow">
                     ${user.user_type === 'admin' ? 'Admin' : 'User'}
                 </span>
             </td>
             <td class="px-6 py-5">
-                <div class="text-sm text-gray-600">
+                <div class="text-sm text-gray-600 dark:text-dark-300">
                     <div>${user.polls_created} polls created</div>
                     <div>${user.votes_count} votes cast</div>
                 </div>
             </td>
             <td class="px-6 py-5">
                 <div class="flex flex-wrap gap-2">
-                    <button onclick="editUser(${user.id})" class="inline-flex items-center px-3 py-1.5 rounded-lg bg-yellow-50 text-yellow-700 hover:bg-yellow-100 font-medium transition text-sm">
+                    <button onclick="editUser(${user.id})" class="inline-flex items-center px-3 py-1.5 rounded-lg bg-yellow-50 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 hover:bg-yellow-100 dark:hover:bg-yellow-900/50 font-medium transition text-sm">
                         <i class="fas fa-edit mr-1.5 text-xs"></i> Edit
                     </button>
-                    <button onclick="deleteUser(${user.id})" class="inline-flex items-center px-3 py-1.5 rounded-lg bg-red-50 text-red-700 hover:bg-red-100 font-medium transition text-sm">
+                    <button onclick="deleteUser(${user.id})" class="inline-flex items-center px-3 py-1.5 rounded-lg bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-300 hover:bg-red-100 dark:hover:bg-red-900/50 font-medium transition text-sm">
                         <i class="fas fa-trash mr-1.5 text-xs"></i> Delete
                     </button>
                 </div>
@@ -332,9 +332,9 @@ function renderUsers() {
 function renderEmptyState() {
     document.getElementById('usersTableBody').innerHTML = `
         <tr>
-            <td colspan="5" class="px-6 py-8 text-center text-gray-500">
+            <td colspan="5" class="px-6 py-8 text-center text-gray-500 dark:text-dark-400">
                 <div class="flex flex-col items-center">
-                    <i class="fas fa-users text-4xl text-gray-300 mb-4"></i>
+                    <i class="fas fa-users text-4xl text-gray-300 dark:text-dark-500 mb-4"></i>
                     <p class="text-lg font-medium">No users found</p>
                 </div>
             </td>
@@ -498,9 +498,9 @@ function showMessage(type, message) {
     messageText.textContent = message;
     
     if (type === 'success') {
-        alert.className = 'bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-xl relative';
+        alert.className = 'bg-green-100 dark:bg-green-900/30 border border-green-400 dark:border-green-600 text-green-700 dark:text-green-300 px-4 py-3 rounded-xl relative transition-colors duration-300';
     } else {
-        alert.className = 'bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-xl relative';
+        alert.className = 'bg-red-100 dark:bg-red-900/30 border border-red-400 dark:border-red-600 text-red-700 dark:text-red-300 px-4 py-3 rounded-xl relative transition-colors duration-300';
     }
     
     container.classList.remove('hidden');

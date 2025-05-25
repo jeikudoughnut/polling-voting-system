@@ -1,69 +1,69 @@
 <div class="w-full min-h-screen pt-8 pb-12 px-6">
     <div class="w-full">
-        <h1 class="text-5xl font-extrabold text-gray-800 mb-8 text-center tracking-tight drop-shadow-sm">
+        <h1 class="text-5xl font-extrabold text-gray-800 dark:text-dark-100 mb-8 text-center tracking-tight drop-shadow-sm transition-colors duration-300">
             Dashboard Overview
         </h1>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
             <!-- All Polls -->
-            <a href="?page=polls&tab=polls" class="relative bg-gradient-to-br from-blue-100 to-blue-50 rounded-2xl flex flex-col items-center justify-center h-48 shadow-xl border border-blue-100 group hover:scale-[1.02] transition-all duration-300 overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-400">
-                <div class="absolute top-0 right-0 w-20 h-20 bg-blue-200 rounded-full -mr-8 -mt-8 opacity-30 blur-sm"></div>
-                <div class="absolute bottom-0 left-0 w-20 h-20 bg-blue-200 rounded-full -ml-8 -mb-8 opacity-30 blur-sm"></div>
-                <div class="bg-blue-200/80 p-4 rounded-full mb-3 group-hover:scale-110 transition-transform duration-300 shadow-md">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <a href="?page=polls&tab=polls" class="relative bg-gradient-to-br from-blue-100 to-blue-50 dark:from-blue-900/30 dark:to-blue-800/30 rounded-2xl flex flex-col items-center justify-center h-48 shadow-xl border border-blue-100 dark:border-blue-700 group hover:scale-[1.02] transition-all duration-300 overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <div class="absolute top-0 right-0 w-20 h-20 bg-blue-200 dark:bg-blue-800 rounded-full -mr-8 -mt-8 opacity-30 blur-sm"></div>
+                <div class="absolute bottom-0 left-0 w-20 h-20 bg-blue-200 dark:bg-blue-800 rounded-full -ml-8 -mb-8 opacity-30 blur-sm"></div>
+                <div class="bg-blue-200/80 dark:bg-blue-700/80 p-4 rounded-full mb-3 group-hover:scale-110 transition-transform duration-300 shadow-md">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-blue-600 dark:text-blue-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <rect x="4" y="4" width="16" height="16" rx="2" stroke-width="2" stroke="currentColor" fill="none"/>
                         <path d="M9 12l2 2l4-4" stroke="currentColor" stroke-width="2.5" fill="none"/>
                     </svg>
                 </div>
-                <div class="text-4xl font-black text-blue-700 mb-1 tracking-tight" id="totalPollsCount">
+                <div class="text-4xl font-black text-blue-700 dark:text-blue-300 mb-1 tracking-tight" id="totalPollsCount">
                     <i class="fas fa-spinner fa-spin text-2xl"></i>
                 </div>
-                <div class="text-lg font-semibold text-blue-600">All Polls</div>
+                <div class="text-lg font-semibold text-blue-600 dark:text-blue-400">All Polls</div>
             </a>
             <!-- Participated Polls -->
-            <a href="?page=polls&tab=myvotes" class="relative bg-gradient-to-br from-purple-100 to-purple-50 rounded-2xl flex flex-col items-center justify-center h-48 shadow-xl border border-purple-100 group hover:scale-[1.02] transition-all duration-300 overflow-hidden focus:outline-none focus:ring-2 focus:ring-purple-400">
-                <div class="absolute top-0 right-0 w-20 h-20 bg-purple-200 rounded-full -mr-8 -mt-8 opacity-30 blur-sm"></div>
-                <div class="absolute bottom-0 left-0 w-20 h-20 bg-purple-200 rounded-full -ml-8 -mb-8 opacity-30 blur-sm"></div>
-                <div class="bg-purple-200/80 p-4 rounded-full mb-3 group-hover:scale-110 transition-transform duration-300 shadow-md">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <a href="?page=polls&tab=myvotes" class="relative bg-gradient-to-br from-purple-100 to-purple-50 dark:from-purple-900/30 dark:to-purple-800/30 rounded-2xl flex flex-col items-center justify-center h-48 shadow-xl border border-purple-100 dark:border-purple-700 group hover:scale-[1.02] transition-all duration-300 overflow-hidden focus:outline-none focus:ring-2 focus:ring-purple-400">
+                <div class="absolute top-0 right-0 w-20 h-20 bg-purple-200 dark:bg-purple-800 rounded-full -mr-8 -mt-8 opacity-30 blur-sm"></div>
+                <div class="absolute bottom-0 left-0 w-20 h-20 bg-purple-200 dark:bg-purple-800 rounded-full -ml-8 -mb-8 opacity-30 blur-sm"></div>
+                <div class="bg-purple-200/80 dark:bg-purple-700/80 p-4 rounded-full mb-3 group-hover:scale-110 transition-transform duration-300 shadow-md">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-purple-600 dark:text-purple-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <g>
                             <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
                             <path d="M8 13l2.5 2.5L16 10" stroke="currentColor" stroke-width="2.5" fill="none"/>
                         </g>
                     </svg>
                 </div>
-                <div class="text-4xl font-black text-purple-700 mb-1 tracking-tight" id="userVotesCount">
+                <div class="text-4xl font-black text-purple-700 dark:text-purple-300 mb-1 tracking-tight" id="userVotesCount">
                     <i class="fas fa-spinner fa-spin text-2xl"></i>
                 </div>
-                <div class="text-lg font-semibold text-purple-600">Participated Polls</div>
+                <div class="text-lg font-semibold text-purple-600 dark:text-purple-400">Participated Polls</div>
             </a>
             <!-- Created Polls -->
-            <a href="?page=polls&tab=mycreated" class="relative bg-gradient-to-br from-green-100 to-green-50 rounded-2xl flex flex-col items-center justify-center h-48 shadow-xl border border-green-100 group hover:scale-[1.02] transition-all duration-300 overflow-hidden focus:outline-none focus:ring-2 focus:ring-green-400">
-                <div class="absolute top-0 right-0 w-20 h-20 bg-green-200 rounded-full -mr-8 -mt-8 opacity-30 blur-sm"></div>
-                <div class="absolute bottom-0 left-0 w-20 h-20 bg-green-200 rounded-full -ml-8 -mb-8 opacity-30 blur-sm"></div>
-                <div class="bg-green-200/80 p-4 rounded-full mb-3 group-hover:scale-110 transition-transform duration-300 shadow-md">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <a href="?page=polls&tab=mycreated" class="relative bg-gradient-to-br from-green-100 to-green-50 dark:from-green-900/30 dark:to-green-800/30 rounded-2xl flex flex-col items-center justify-center h-48 shadow-xl border border-green-100 dark:border-green-700 group hover:scale-[1.02] transition-all duration-300 overflow-hidden focus:outline-none focus:ring-2 focus:ring-green-400">
+                <div class="absolute top-0 right-0 w-20 h-20 bg-green-200 dark:bg-green-800 rounded-full -mr-8 -mt-8 opacity-30 blur-sm"></div>
+                <div class="absolute bottom-0 left-0 w-20 h-20 bg-green-200 dark:bg-green-800 rounded-full -ml-8 -mb-8 opacity-30 blur-sm"></div>
+                <div class="bg-green-200/80 dark:bg-green-700/80 p-4 rounded-full mb-3 group-hover:scale-110 transition-transform duration-300 shadow-md">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-green-600 dark:text-green-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
                     </svg>
                 </div>
-                <div class="text-4xl font-black text-green-700 mb-1 tracking-tight" id="userCreatedCount">
+                <div class="text-4xl font-black text-green-700 dark:text-green-300 mb-1 tracking-tight" id="userCreatedCount">
                     <i class="fas fa-spinner fa-spin text-2xl"></i>
                 </div>
-                <div class="text-lg font-semibold text-green-600">Created Polls</div>
+                <div class="text-lg font-semibold text-green-600 dark:text-green-400">Created Polls</div>
             </a>
         </div>
         
         <!-- Trending Polls -->
         <div class="grid grid-cols-1 mb-8">
             <!-- Trending Polls Chart -->
-            <div class="bg-white/95 rounded-2xl shadow-xl border border-gray-100 p-6 backdrop-blur-sm">
+            <div class="bg-white/95 dark:bg-dark-800/95 rounded-2xl shadow-xl border border-gray-100 dark:border-dark-700 p-6 backdrop-blur-sm transition-colors duration-300">
                 <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-2xl font-bold text-gray-800 flex items-center">
-                        <svg class="w-6 h-6 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <h2 class="text-2xl font-bold text-gray-800 dark:text-dark-100 flex items-center transition-colors duration-300">
+                        <svg class="w-6 h-6 mr-2 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
                         </svg>
                         Trending Polls
                     </h2>
-                    <div class="text-sm text-gray-500" id="trendingSubtext">Loading...</div>
+                    <div class="text-sm text-gray-500 dark:text-dark-400 transition-colors duration-300" id="trendingSubtext">Loading...</div>
                 </div>
                 <div class="w-full h-64 flex items-center justify-center">
                     <canvas id="trendingPollsChart"></canvas>

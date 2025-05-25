@@ -1,17 +1,17 @@
 <div class="w-full min-h-screen pt-8 pb-12 px-6">
     <div class="w-full">
-        <h1 class="text-5xl font-extrabold text-gray-800 mb-6 text-center tracking-tight drop-shadow-sm">
+        <h1 class="text-5xl font-extrabold text-gray-800 dark:text-dark-100 mb-6 text-center tracking-tight drop-shadow-sm transition-colors duration-300">
             Poll Management
         </h1>
 
         <!-- Success/Error Messages -->
         @if(session('success'))
             <div class="max-w-6xl mx-auto mb-6">
-                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-xl relative" role="alert">
+                <div class="bg-green-100 dark:bg-green-900/30 border border-green-400 dark:border-green-600 text-green-700 dark:text-green-300 px-4 py-3 rounded-xl relative transition-colors duration-300" role="alert">
                     <strong class="font-bold">Success!</strong>
                     <span class="block sm:inline">{{ session('success') }}</span>
                     <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
-                        <svg class="fill-current h-6 w-6 text-green-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" onclick="this.parentElement.parentElement.style.display='none'">
+                        <svg class="fill-current h-6 w-6 text-green-500 dark:text-green-400" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" onclick="this.parentElement.parentElement.style.display='none'">
                             <title>Close</title>
                             <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/>
                         </svg>
@@ -22,11 +22,11 @@
 
         @if(session('error'))
             <div class="max-w-6xl mx-auto mb-6">
-                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-xl relative" role="alert">
+                <div class="bg-red-100 dark:bg-red-900/30 border border-red-400 dark:border-red-600 text-red-700 dark:text-red-300 px-4 py-3 rounded-xl relative transition-colors duration-300" role="alert">
                     <strong class="font-bold">Error!</strong>
                     <span class="block sm:inline">{{ session('error') }}</span>
                     <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
-                        <svg class="fill-current h-6 w-6 text-red-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" onclick="this.parentElement.parentElement.style.display='none'">
+                        <svg class="fill-current h-6 w-6 text-red-500 dark:text-red-400" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" onclick="this.parentElement.parentElement.style.display='none'">
                             <title>Close</title>
                             <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/>
                         </svg>
@@ -36,19 +36,19 @@
         @endif
 
         <div class="max-w-6xl mx-auto">
-            <div class="bg-white/95 rounded-2xl shadow-2xl border border-gray-100 p-8 relative overflow-hidden">
+            <div class="bg-white/95 dark:bg-dark-800/95 rounded-2xl shadow-2xl border border-gray-100 dark:border-dark-700 p-8 relative overflow-hidden transition-colors duration-300">
                 <!-- Decorative Circles -->
-                <div class="absolute -top-8 -left-8 w-32 h-32 bg-blue-100 rounded-full opacity-20 blur-2xl"></div>
-                <div class="absolute -bottom-8 -right-8 w-32 h-32 bg-yellow-100 rounded-full opacity-20 blur-2xl"></div>
+                <div class="absolute -top-8 -left-8 w-32 h-32 bg-blue-100 dark:bg-blue-900/30 rounded-full opacity-20 blur-2xl"></div>
+                <div class="absolute -bottom-8 -right-8 w-32 h-32 bg-yellow-100 dark:bg-yellow-900/30 rounded-full opacity-20 blur-2xl"></div>
                 <!-- Tabs with Floating Indicator -->
                 <div class="flex relative mb-8">
                     <button id="tab-all"
-                        class="relative z-10 py-3 px-10 text-xl font-semibold transition-all duration-200 focus:outline-none text-blue-600 border-b-2 border-blue-500"
+                        class="relative z-10 py-3 px-10 text-xl font-semibold transition-all duration-200 focus:outline-none text-blue-600 dark:text-blue-400 border-b-2 border-blue-500 dark:border-blue-400"
                         onclick="showTab('all')">
                         All Polls
                     </button>
                     <button id="tab-pending"
-                        class="relative z-10 py-3 px-10 text-xl font-semibold transition-all duration-200 focus:outline-none text-gray-500 border-b-2 border-transparent hover:text-yellow-600 hover:border-yellow-400"
+                        class="relative z-10 py-3 px-10 text-xl font-semibold transition-all duration-200 focus:outline-none text-gray-500 dark:text-dark-400 border-b-2 border-transparent hover:text-yellow-600 dark:hover:text-yellow-400 hover:border-yellow-400"
                         onclick="showTab('pending')">
                         Pending Polls
                     </button>
@@ -68,55 +68,55 @@
                     <div class="overflow-x-auto">
                         <table class="min-w-full text-left rounded-xl overflow-hidden">
                             <thead>
-                                <tr class="bg-gradient-to-r from-blue-50 to-green-50">
-                                    <th class="px-6 py-4 text-lg font-semibold text-blue-700">Poll</th>
-                                    <th class="px-6 py-4 text-lg font-semibold text-blue-700">Status</th>
-                                    <th class="px-6 py-4 text-lg font-semibold text-blue-700">Created</th>
-                                    <th class="px-6 py-4 text-lg font-semibold text-blue-700">Action</th>
+                                <tr class="bg-gradient-to-r from-blue-50 to-green-50 dark:from-blue-900/30 dark:to-green-900/30">
+                                    <th class="px-6 py-4 text-lg font-semibold text-blue-700 dark:text-blue-300">Poll</th>
+                                    <th class="px-6 py-4 text-lg font-semibold text-blue-700 dark:text-blue-300">Status</th>
+                                    <th class="px-6 py-4 text-lg font-semibold text-blue-700 dark:text-blue-300">Created</th>
+                                    <th class="px-6 py-4 text-lg font-semibold text-blue-700 dark:text-blue-300">Action</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-gray-100">
+                            <tbody class="divide-y divide-gray-100 dark:divide-dark-600">
                                 @php
                                     $allPolls = App\Models\Poll::with(['questions.options', 'creator'])->orderBy('creation_date', 'desc')->get();
                                 @endphp
                                 @forelse($allPolls as $poll)
-                                    <tr class="hover:bg-blue-50/60 transition">
+                                    <tr class="hover:bg-blue-50/60 dark:hover:bg-blue-900/20 transition">
                                         <td class="px-6 py-5">
                                             <div>
-                                                <div class="text-lg text-gray-800 font-medium">{{ $poll->poll_title }}</div>
+                                                <div class="text-lg text-gray-800 dark:text-dark-200 font-medium">{{ $poll->poll_title }}</div>
                                                 @if($poll->poll_description)
-                                                    <div class="text-sm text-gray-600 mt-1">{{ Str::limit($poll->poll_description, 100) }}</div>
+                                                    <div class="text-sm text-gray-600 dark:text-dark-300 mt-1">{{ Str::limit($poll->poll_description, 100) }}</div>
                                                 @endif
-                                                <div class="text-xs text-gray-500 mt-1">by {{ $poll->creator->name ?? 'Unknown' }}</div>
+                                                <div class="text-xs text-gray-500 dark:text-dark-400 mt-1">by {{ $poll->creator->name ?? 'Unknown' }}</div>
                                             </div>
                                         </td>
                                         <td class="px-6 py-5">
                                             @if($poll->status === 'active')
-                                                <span class="inline-flex items-center px-4 py-2 rounded-full bg-green-100 text-green-700 text-base font-semibold shadow">
-                                                    <svg class="w-4 h-4 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20"><circle cx="10" cy="10" r="10"/></svg>
+                                                <span class="inline-flex items-center px-4 py-2 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 text-base font-semibold shadow">
+                                                    <svg class="w-4 h-4 mr-2 text-green-500 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20"><circle cx="10" cy="10" r="10"/></svg>
                                                     Active
                                                 </span>
                                             @elseif($poll->status === 'pending')
-                                                <span class="inline-flex items-center px-4 py-2 rounded-full bg-yellow-100 text-yellow-700 text-base font-semibold shadow">
-                                                    <svg class="w-4 h-4 mr-2 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><circle cx="10" cy="10" r="10"/></svg>
+                                                <span class="inline-flex items-center px-4 py-2 rounded-full bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 text-base font-semibold shadow">
+                                                    <svg class="w-4 h-4 mr-2 text-yellow-500 dark:text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><circle cx="10" cy="10" r="10"/></svg>
                                                     Pending
                                                 </span>
                                             @else
-                                                <span class="inline-flex items-center px-4 py-2 rounded-full bg-gray-200 text-gray-700 text-base font-semibold shadow">
-                                                    <svg class="w-4 h-4 mr-2 text-gray-400" fill="currentColor" viewBox="0 0 20 20"><circle cx="10" cy="10" r="10"/></svg>
+                                                <span class="inline-flex items-center px-4 py-2 rounded-full bg-gray-200 dark:bg-dark-600 text-gray-700 dark:text-dark-300 text-base font-semibold shadow">
+                                                    <svg class="w-4 h-4 mr-2 text-gray-400 dark:text-dark-400" fill="currentColor" viewBox="0 0 20 20"><circle cx="10" cy="10" r="10"/></svg>
                                                     Closed
                                                 </span>
                                             @endif
                                         </td>
                                         <td class="px-6 py-5">
-                                            <div class="text-sm text-gray-600">{{ $poll->formatted_creation_date }}</div>
+                                            <div class="text-sm text-gray-600 dark:text-dark-300">{{ $poll->formatted_creation_date }}</div>
                                             @if($poll->end_date)
-                                                <div class="text-xs text-gray-500">Expires: {{ $poll->formatted_end_date }}</div>
+                                                <div class="text-xs text-gray-500 dark:text-dark-400">Expires: {{ $poll->formatted_end_date }}</div>
                                             @endif
                                         </td>
                                         <td class="px-6 py-5">
                                             <div class="flex flex-wrap gap-2">
-                                                <a href="{{ route('admin.polls.show', $poll) }}" class="inline-flex items-center px-3 py-1.5 rounded-lg bg-blue-50 text-blue-700 hover:bg-blue-100 font-medium transition text-sm">
+                                                <a href="{{ route('admin.polls.show', $poll) }}" class="inline-flex items-center px-3 py-1.5 rounded-lg bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-900/50 font-medium transition text-sm">
                                                     <i class="fas fa-eye mr-1.5 text-xs"></i> View
                                                 </a>
                                                 @if($poll->status === 'active')
@@ -124,7 +124,7 @@
                                                         @csrf
                                                         @method('PATCH')
                                                         <input type="hidden" name="status" value="closed">
-                                                        <button type="submit" class="inline-flex items-center px-3 py-1.5 rounded-lg bg-yellow-50 text-yellow-700 hover:bg-yellow-100 font-medium transition text-sm">
+                                                        <button type="submit" class="inline-flex items-center px-3 py-1.5 rounded-lg bg-yellow-50 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 hover:bg-yellow-100 dark:hover:bg-yellow-900/50 font-medium transition text-sm">
                                                             <i class="fas fa-stop mr-1.5 text-xs"></i> Close
                                                         </button>
                                                     </form>
@@ -133,7 +133,7 @@
                                                         @csrf
                                                         @method('PATCH')
                                                         <input type="hidden" name="status" value="active">
-                                                        <button type="submit" class="inline-flex items-center px-3 py-1.5 rounded-lg bg-green-50 text-green-700 hover:bg-green-100 font-medium transition text-sm">
+                                                        <button type="submit" class="inline-flex items-center px-3 py-1.5 rounded-lg bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300 hover:bg-green-100 dark:hover:bg-green-900/50 font-medium transition text-sm">
                                                             <i class="fas fa-check mr-1.5 text-xs"></i> Approve
                                                         </button>
                                                     </form>
@@ -141,7 +141,7 @@
                                                 <form action="{{ route('admin.polls.destroy', $poll) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete this poll?')">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="inline-flex items-center px-3 py-1.5 rounded-lg bg-red-50 text-red-700 hover:bg-red-100 font-medium transition text-sm">
+                                                    <button type="submit" class="inline-flex items-center px-3 py-1.5 rounded-lg bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-300 hover:bg-red-100 dark:hover:bg-red-900/50 font-medium transition text-sm">
                                                         <i class="fas fa-trash mr-1.5 text-xs"></i> Delete
                                                     </button>
                                                 </form>
@@ -150,9 +150,9 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="4" class="px-6 py-8 text-center text-gray-500">
+                                        <td colspan="4" class="px-6 py-8 text-center text-gray-500 dark:text-dark-400">
                                             <div class="flex flex-col items-center">
-                                                <i class="fas fa-poll text-4xl text-gray-300 mb-4"></i>
+                                                <i class="fas fa-poll text-4xl text-gray-300 dark:text-dark-500 mb-4"></i>
                                                 <p class="text-lg font-medium">No polls found</p>
                                                 <p class="text-sm">Create your first poll to get started!</p>
                                             </div>
