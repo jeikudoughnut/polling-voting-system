@@ -399,6 +399,11 @@ function renderMyPolls() {
                     <button onclick="viewPollResults(${poll.id})" class="inline-flex items-center px-4 py-2 rounded-full bg-green-100 text-green-700 hover:bg-green-200 font-medium transition-all duration-200 shadow-sm">
                         <i class="fas fa-chart-pie mr-2"></i> Results
                     </button>
+                    ${poll.status === 'active' ? `
+                        <button onclick="closePoll(${poll.id})" class="inline-flex items-center px-4 py-2 rounded-full bg-red-100 text-red-700 hover:bg-red-200 font-medium transition-all duration-200 shadow-sm">
+                            <i class="fas fa-stop mr-2"></i> Close Poll
+                        </button>
+                    ` : ''}
                 </div>
             </td>
         </tr>
@@ -584,6 +589,39 @@ async function submitVote() {
 function viewPollResults(pollId) {
     // Navigate to results page and load the specific poll
     window.location.href = `?page=results&poll=${pollId}`;
+}
+
+// Close poll function
+async function closePoll(pollId) {
+    if (!confirm('Are you sure you want to close this poll? This action cannot be undone.')) {
+        return;
+    }
+    
+    try {
+        const response = await fetch(`/user/polls/${pollId}/close`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            }
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            showMessage('success', data.message);
+            loadMyPolls(); // Reload the polls to update the status
+            // Also reload main polls if that tab is visible
+            if (!document.getElementById('tab-content-polls').classList.contains('hidden')) {
+                loadPolls();
+            }
+        } else {
+            showMessage('error', data.message);
+        }
+    } catch (error) {
+        console.error('Error closing poll:', error);
+        showMessage('error', 'Failed to close poll. Please try again.');
+    }
 }
 
 // Close modal when clicking outside

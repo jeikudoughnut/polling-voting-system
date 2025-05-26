@@ -481,6 +481,42 @@ class PollController extends Controller
     }
 
     /**
+     * Close a poll created by the user
+     */
+    public function closePoll(Poll $poll)
+    {
+        // Check if the user is the creator of the poll
+        if ($poll->creator_user_id !== Auth::id()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'You can only close polls that you created.',
+            ], 403);
+        }
+
+        // Check if the poll is not already closed
+        if ($poll->status === 'closed') {
+            return response()->json([
+                'success' => false,
+                'message' => 'This poll is already closed.',
+            ], 400);
+        }
+
+        try {
+            $poll->update(['status' => 'closed']);
+            
+            return response()->json([
+                'success' => true,
+                'message' => 'Poll closed successfully!',
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to close poll. Please try again.',
+            ], 500);
+        }
+    }
+
+    /**
      * Store poll created by user
      */
     public function userStore(Request $request)
