@@ -407,6 +407,11 @@ function renderMyPolls() {
                     <button onclick="viewPollResults(${poll.id})" class="inline-flex items-center px-4 py-2 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 hover:bg-green-200 dark:hover:bg-green-900/50 font-medium transition-all duration-200 shadow-sm">
                         <i class="fas fa-chart-pie mr-2"></i> Results
                     </button>
+                    ${poll.status === 'active' ? `
+                        <button onclick="closePoll(${poll.id})" class="inline-flex items-center px-4 py-2 rounded-full bg-red-100 text-red-700 hover:bg-red-200 font-medium transition-all duration-200 shadow-sm">
+                            <i class="fas fa-stop mr-2"></i> Close Poll
+                        </button>
+                    ` : ''}
                 </div>
             </td>
         </tr>
@@ -523,14 +528,24 @@ function renderVoteModal() {
             <div class="mb-8">
                 <h4 class="text-lg font-medium text-gray-800 dark:text-dark-100 mb-4 transition-colors duration-300">${question.text}</h4>
                 <div class="space-y-3" data-question-id="${question.id}" data-question-type="${question.type}">
-                    ${question.options.map(option => `
-                        <label class="flex items-center p-4 border-2 border-gray-200 dark:border-dark-600 rounded-xl hover:border-blue-300 dark:hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20 cursor-pointer transition-all duration-200">
+                    ${question.options.map((option, index) => `
+                        <label class="flex items-center p-4 border-2 border-gray-200 rounded-xl hover:border-blue-300 hover:bg-blue-50 cursor-pointer transition-all duration-200">
                             <input type="${question.type === 'single_choice' ? 'radio' : 'checkbox'}" 
                                    name="question_${question.id}" 
                                    value="${option.id}" 
-                                   class="w-4 h-4 text-blue-600 border-gray-300 dark:border-dark-500 focus:ring-blue-500 dark:bg-dark-700">
-                            <span class="ml-3 text-gray-800 dark:text-dark-100 font-medium transition-colors duration-300">${option.text}</span>
+                                   class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                   ${option.text.includes('Other') ? `onchange="toggleCustomInput(this, ${index})"` : ''}>
+                            <span class="ml-3 text-gray-800 font-medium">${option.text}</span>
                         </label>
+                        ${option.text.includes('Other') && question.allow_custom_answers ? `
+                            <div class="ml-8 mt-2 hidden" id="custom-input-${index}">
+                                <input type="text" 
+                                       name="custom_response_${index}" 
+                                       placeholder="Please specify your answer..." 
+                                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                       maxlength="500">
+                            </div>
+                        ` : ''}
                     `).join('')}
                 </div>
             </div>
@@ -547,6 +562,20 @@ function renderVoteModal() {
     `;
 }
 
+// Toggle custom input visibility
+function toggleCustomInput(checkbox, index) {
+    const customInputDiv = document.getElementById(`custom-input-${index}`);
+    if (customInputDiv) {
+        if (checkbox.checked) {
+            customInputDiv.classList.remove('hidden');
+            customInputDiv.querySelector('input').focus();
+        } else {
+            customInputDiv.classList.add('hidden');
+            customInputDiv.querySelector('input').value = '';
+        }
+    }
+}
+
 // Submit vote
 async function submitVote() {
     if (!currentPoll) return;
@@ -560,6 +589,13 @@ async function submitVote() {
         return;
     }
     
+    // Collect custom responses
+    const customResponses = [];
+    const customInputs = document.querySelectorAll('[name^="custom_response_"]');
+    customInputs.forEach((input, index) => {
+        customResponses[index] = input.value.trim();
+    });
+    
     try {
         const response = await fetch(`/user/polls/${currentPoll.id}/vote`, {
             method: 'POST',
@@ -569,7 +605,8 @@ async function submitVote() {
             },
             body: JSON.stringify({
                 question_id: question.id,
-                option_ids: selectedOptions
+                option_ids: selectedOptions,
+                custom_responses: customResponses
             })
         });
         
@@ -592,6 +629,39 @@ async function submitVote() {
 function viewPollResults(pollId) {
     // Navigate to results page and load the specific poll
     window.location.href = `?page=results&poll=${pollId}`;
+}
+
+// Close poll function
+async function closePoll(pollId) {
+    if (!confirm('Are you sure you want to close this poll? This action cannot be undone.')) {
+        return;
+    }
+    
+    try {
+        const response = await fetch(`/user/polls/${pollId}/close`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            }
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            showMessage('success', data.message);
+            loadMyPolls(); // Reload the polls to update the status
+            // Also reload main polls if that tab is visible
+            if (!document.getElementById('tab-content-polls').classList.contains('hidden')) {
+                loadPolls();
+            }
+        } else {
+            showMessage('error', data.message);
+        }
+    } catch (error) {
+        console.error('Error closing poll:', error);
+        showMessage('error', 'Failed to close poll. Please try again.');
+    }
 }
 
 // Close modal when clicking outside

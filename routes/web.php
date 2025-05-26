@@ -86,6 +86,7 @@ Route::middleware('auth')->group(function () {
         // Results routes
         Route::get('results', [PollController::class, 'getUserResults'])->name('results');
         Route::get('polls/{poll}/results', [PollController::class, 'getPollResults'])->name('polls.results');
+        Route::patch('polls/{poll}/close', [PollController::class, 'closePoll'])->name('polls.close');
         Route::get('polls/{poll}/export/csv', [PollController::class, 'exportCSV'])->name('polls.export.csv');
         Route::get('polls/{poll}/export/pdf', [PollController::class, 'exportPDF'])->name('polls.export.pdf');
     });

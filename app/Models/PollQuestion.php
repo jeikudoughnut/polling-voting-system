@@ -12,7 +12,8 @@ class PollQuestion extends Model
     protected $fillable = [
         'poll_id',
         'question_text',
-        'question_type'
+        'question_type',
+        'allow_custom_answers'
     ];
 
     public function poll()

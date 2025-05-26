@@ -136,6 +136,19 @@
                                 </label>
                             </div>
 
+                            <!-- Allow Custom Answers -->
+                            <div class="flex items-center justify-between mb-6 p-4 bg-gray-50 rounded-lg">
+                                <div>
+                                    <span class="text-gray-800 text-base font-medium">Allow custom answers</span>
+                                    <p class="text-gray-600 text-sm">Let voters provide their own answer option</p>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" name="allow_custom_answers" value="1" class="sr-only peer">
+                                    <div class="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-2 peer-focus:ring-purple-500 peer-checked:bg-purple-600 transition-all"></div>
+                                    <div class="absolute left-1 top-1 w-4 h-4 bg-white rounded-full shadow-md peer-checked:translate-x-5 transition-all"></div>
+                                </label>
+                            </div>
+
                             <!-- Schedule Close -->
                             <div class="flex items-center justify-between mb-4 p-4 bg-gray-50 dark:bg-dark-700 rounded-lg transition-colors duration-300">
                                 <div>
@@ -442,6 +455,11 @@ async function submitForm() {
         const allowMultiple = document.querySelector('input[name="allow_multiple"]').checked;
         if (allowMultiple) {
             formData.append('allow_multiple', '1');
+        }
+
+        const allowCustomAnswers = document.querySelector('input[name="allow_custom_answers"]').checked;
+        if (allowCustomAnswers) {
+            formData.append('allow_custom_answers', '1');
         }
 
         const scheduleToggle = document.getElementById('scheduleToggle');
