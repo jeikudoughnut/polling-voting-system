@@ -520,14 +520,24 @@ function renderVoteModal() {
             <div class="mb-8">
                 <h4 class="text-lg font-medium text-gray-800 mb-4">${question.text}</h4>
                 <div class="space-y-3" data-question-id="${question.id}" data-question-type="${question.type}">
-                    ${question.options.map(option => `
+                    ${question.options.map((option, index) => `
                         <label class="flex items-center p-4 border-2 border-gray-200 rounded-xl hover:border-blue-300 hover:bg-blue-50 cursor-pointer transition-all duration-200">
                             <input type="${question.type === 'single_choice' ? 'radio' : 'checkbox'}" 
                                    name="question_${question.id}" 
                                    value="${option.id}" 
-                                   class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
+                                   class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                   ${option.text.includes('Other') ? `onchange="toggleCustomInput(this, ${index})"` : ''}>
                             <span class="ml-3 text-gray-800 font-medium">${option.text}</span>
                         </label>
+                        ${option.text.includes('Other') && question.allow_custom_answers ? `
+                            <div class="ml-8 mt-2 hidden" id="custom-input-${index}">
+                                <input type="text" 
+                                       name="custom_response_${index}" 
+                                       placeholder="Please specify your answer..." 
+                                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                       maxlength="500">
+                            </div>
+                        ` : ''}
                     `).join('')}
                 </div>
             </div>
@@ -544,6 +554,20 @@ function renderVoteModal() {
     `;
 }
 
+// Toggle custom input visibility
+function toggleCustomInput(checkbox, index) {
+    const customInputDiv = document.getElementById(`custom-input-${index}`);
+    if (customInputDiv) {
+        if (checkbox.checked) {
+            customInputDiv.classList.remove('hidden');
+            customInputDiv.querySelector('input').focus();
+        } else {
+            customInputDiv.classList.add('hidden');
+            customInputDiv.querySelector('input').value = '';
+        }
+    }
+}
+
 // Submit vote
 async function submitVote() {
     if (!currentPoll) return;
@@ -557,6 +581,13 @@ async function submitVote() {
         return;
     }
     
+    // Collect custom responses
+    const customResponses = [];
+    const customInputs = document.querySelectorAll('[name^="custom_response_"]');
+    customInputs.forEach((input, index) => {
+        customResponses[index] = input.value.trim();
+    });
+    
     try {
         const response = await fetch(`/user/polls/${currentPoll.id}/vote`, {
             method: 'POST',
@@ -566,7 +597,8 @@ async function submitVote() {
             },
             body: JSON.stringify({
                 question_id: question.id,
-                option_ids: selectedOptions
+                option_ids: selectedOptions,
+                custom_responses: customResponses
             })
         });
         

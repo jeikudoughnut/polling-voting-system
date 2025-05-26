@@ -52,6 +52,7 @@ class PollController extends Controller
             'options' => 'required|array|min:2|max:10',
             'options.*' => 'required|string|max:255|distinct',
             'allow_multiple' => 'nullable|boolean',
+            'allow_custom_answers' => 'nullable|boolean',
             'status' => ['required', Rule::in(['pending', 'active', 'closed'])],
             'end_date' => 'nullable|date|after:now',
         ], [
@@ -89,6 +90,7 @@ class PollController extends Controller
                 'poll_id' => $poll->id,
                 'question_text' => $validated['question_text'],
                 'question_type' => isset($validated['allow_multiple']) && $validated['allow_multiple'] ? 'multiple_choice' : 'single_choice',
+                'allow_custom_answers' => isset($validated['allow_custom_answers']) && $validated['allow_custom_answers'],
             ]);
 
             // Create the options
@@ -96,6 +98,14 @@ class PollController extends Controller
                 PollOption::create([
                     'question_id' => $question->id,
                     'option_text' => trim($optionText),
+                ]);
+            }
+
+            // Add "Other" option if custom answers are allowed
+            if (isset($validated['allow_custom_answers']) && $validated['allow_custom_answers']) {
+                PollOption::create([
+                    'question_id' => $question->id,
+                    'option_text' => 'Other (please specify)',
                 ]);
             }
 
@@ -280,6 +290,7 @@ class PollController extends Controller
                             'id' => $question->id,
                             'text' => $question->question_text,
                             'type' => $question->question_type,
+                            'allow_custom_answers' => $question->allow_custom_answers,
                             'options' => $question->options->map(function ($option) {
                                 return [
                                     'id' => $option->id,
@@ -319,6 +330,7 @@ class PollController extends Controller
                         'id' => $question->id,
                         'text' => $question->question_text,
                         'type' => $question->question_type,
+                        'allow_custom_answers' => $question->allow_custom_answers,
                         'options' => $question->options->map(function ($option) {
                             return [
                                 'id' => $option->id,
@@ -365,6 +377,8 @@ class PollController extends Controller
             'question_id' => 'required|exists:poll_questions,id',
             'option_ids' => 'required|array|min:1',
             'option_ids.*' => 'required|exists:poll_options,id',
+            'custom_responses' => 'nullable|array',
+            'custom_responses.*' => 'nullable|string|max:500',
         ]);
 
         try {
@@ -389,7 +403,7 @@ class PollController extends Controller
             }
 
             // Create votes
-            foreach ($validated['option_ids'] as $optionId) {
+            foreach ($validated['option_ids'] as $index => $optionId) {
                 $option = PollOption::findOrFail($optionId);
                 
                 // Validate that option belongs to this question
@@ -400,11 +414,18 @@ class PollController extends Controller
                     ], 400);
                 }
 
+                // Check if this is a custom response
+                $customResponse = null;
+                if (isset($validated['custom_responses'][$index]) && !empty($validated['custom_responses'][$index])) {
+                    $customResponse = trim($validated['custom_responses'][$index]);
+                }
+
                 Vote::create([
                     'user_id' => Auth::id(),
                     'poll_id' => $poll->id,
                     'question_id' => $question->id,
                     'option_id' => $option->id,
+                    'vote_response' => $customResponse,
                     'vote_date' => now(),
                 ]);
             }
@@ -528,6 +549,7 @@ class PollController extends Controller
             'options' => 'required|array|min:2|max:10',
             'options.*' => 'required|string|max:255|distinct',
             'allow_multiple' => 'nullable|boolean',
+            'allow_custom_answers' => 'nullable|boolean',
             'end_date' => 'nullable|date|after:now',
         ]);
 
@@ -549,6 +571,7 @@ class PollController extends Controller
                 'poll_id' => $poll->id,
                 'question_text' => $validated['question_text'],
                 'question_type' => isset($validated['allow_multiple']) && $validated['allow_multiple'] ? 'multiple_choice' : 'single_choice',
+                'allow_custom_answers' => isset($validated['allow_custom_answers']) && $validated['allow_custom_answers'],
             ]);
 
             // Create the options
@@ -556,6 +579,14 @@ class PollController extends Controller
                 PollOption::create([
                     'question_id' => $question->id,
                     'option_text' => trim($optionText),
+                ]);
+            }
+
+            // Add "Other" option if custom answers are allowed
+            if (isset($validated['allow_custom_answers']) && $validated['allow_custom_answers']) {
+                PollOption::create([
+                    'question_id' => $question->id,
+                    'option_text' => 'Other (please specify)',
                 ]);
             }
 
@@ -716,11 +747,30 @@ class PollController extends Controller
                 $voteCount = $option->votes->count();
                 $percentage = $totalVotes > 0 ? round(($voteCount / $totalVotes) * 100, 1) : 0;
                 
+                // Get custom responses for "Other" option
+                $customResponses = [];
+                if ($option->option_text === 'Other (please specify)') {
+                    $customResponses = $option->votes()
+                        ->whereNotNull('vote_response')
+                        ->where('vote_response', '!=', '')
+                        ->with('user')
+                        ->get()
+                        ->map(function ($vote) {
+                            return [
+                                'response' => $vote->vote_response,
+                                'user' => $vote->user->name ?? 'Anonymous',
+                                'date' => $vote->vote_date->format('M d, Y'),
+                            ];
+                        })
+                        ->toArray();
+                }
+                
                 $options[] = [
                     'id' => $option->id,
                     'text' => $option->option_text,
                     'votes' => $voteCount,
                     'percentage' => $percentage,
+                    'custom_responses' => $customResponses,
                 ];
 
                 if ($voteCount > $maxVotes) {
@@ -731,12 +781,16 @@ class PollController extends Controller
 
             // Get user's choice for this question
             $userChoice = null;
+            $userCustomResponse = null;
             if ($userVoted) {
                 $userVote = $poll->votes()->where('user_id', $userId)
                     ->where('question_id', $question->id)
                     ->with('option')
                     ->first();
-                $userChoice = $userVote ? $userVote->option->option_text : null;
+                if ($userVote) {
+                    $userChoice = $userVote->option->option_text;
+                    $userCustomResponse = $userVote->vote_response;
+                }
             }
 
             $results[] = [
@@ -745,6 +799,7 @@ class PollController extends Controller
                 'total_votes' => $totalVotes,
                 'winning_option' => $winningOption,
                 'user_choice' => $userChoice,
+                'user_custom_response' => $userCustomResponse,
             ];
         }
 
@@ -793,7 +848,7 @@ class PollController extends Controller
             $file = fopen('php://output', 'w');
             
             // Add CSV headers
-            fputcsv($file, ['Poll Title', 'Question', 'Option', 'Votes', 'Percentage', 'Voter Name', 'Vote Date']);
+            fputcsv($file, ['Poll Title', 'Question', 'Option', 'Votes', 'Percentage', 'Voter Name', 'Vote Date', 'Custom Response']);
             
             foreach ($poll->questions as $question) {
                 $totalVotes = $question->votes->count();
@@ -812,6 +867,7 @@ class PollController extends Controller
                                 $percentage . '%',
                                 $vote->user->name ?? 'Anonymous',
                                 $vote->vote_date->format('Y-m-d H:i:s'),
+                                $vote->vote_response ?? '',
                             ]);
                         }
                     } else {
@@ -821,6 +877,7 @@ class PollController extends Controller
                             $option->option_text,
                             0,
                             '0%',
+                            '',
                             '',
                             '',
                         ]);
